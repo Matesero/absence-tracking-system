@@ -34,7 +34,7 @@ export const schema = zod.object({
         })
         .optional(),
 
-    name: zod
+    fullname: zod
         .string()
         .min(1, 'Поле является обязательным')
         .trim()
