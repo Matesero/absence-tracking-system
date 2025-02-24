@@ -1,22 +1,16 @@
 /** @type {import('tailwindcss').Config} */
-import withMT from '@material-tailwind/react/utils/withMT';
 
-module.exports = withMT({
-    content: [
-        './index.html',
-        './node_modules/react-tailwindcss-select/dist/index.esm.js',
-        './node_modules/react-tailwindcss-datepicker/dist/index.esm.{js,ts}',
-        './src/**/*.{html,js,ts,jsx,tsx}',
-    ],
+module.exports = {
+    content: ['./index.html', './src/**/*.{html,js,ts,jsx,tsx}'],
     theme: {
         extend: {
             colors: {
                 primary: {
                     DEFAULT: '#FF592C',
                     darkSea: '#1A3F76',
-                    tuftsBlue: '#317CBA',
+                    tuftsBlue: '#346CB0',
                     superLightGray: '#AAAAAA',
-                    gray: '#D3D3E6',
+                    gray: '#888C9B',
                     lightGray: '#F6F6FB',
                     fairPink: '#FFEFE8',
                     romanSilver: '#8382A2',
@@ -77,4 +71,4 @@ module.exports = withMT({
         'bg-primary-romanSilver',
         'bg-primary-orange',
     ],
-});
+};

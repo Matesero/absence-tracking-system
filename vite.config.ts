@@ -1,28 +1,21 @@
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import tailwindcss from 'tailwindcss';
 import { defineConfig } from 'vite';
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
-  build: {
-    outDir: 'build',
-    sourcemap: true,
-  },
-  server: {
-    port: 3000,
-    open: true,
-  },
-  resolve: {
-    alias: {
-      '~': path.resolve(__dirname, 'src'),
+    build: {
+        outDir: 'build',
+        sourcemap: true,
     },
-  },
-  css: {
-    postcss: {
-      plugins: [tailwindcss()],
+    server: {
+        port: 3000,
+        open: true,
     },
-  },
-  plugins: [
-    react()
-  ]
+    resolve: {
+        alias: {
+            '~': path.resolve(__dirname, 'src'),
+        },
+    },
+    plugins: [react(), svgr()],
 });
