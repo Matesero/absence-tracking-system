@@ -1,6 +1,7 @@
 import { FormEventHandler, useState } from 'react';
 
 import { login } from './api.ts';
+import { register } from './api.ts';
 import { schema, zod2errors } from './schema.ts';
 
 type Props = 'register' | 'login';
@@ -24,13 +25,23 @@ export const useForm = (formType: Props): FormResult => {
 
         if (dataParse.success) {
             const { data } = dataParse;
-            const { email, password } = data;
+            const { email, password, fullname } = data;
 
             switch (formType) {
                 case 'login':
                     if (email && password) {
                         try {
                             await login({ email, password });
+                        } catch (error) {
+                            setErrors({ request: error.toString() });
+                        }
+                    }
+                    break;
+
+                case 'register':
+                    if (fullname && email && password) {
+                        try {
+                            await register({ fullname, email, password });
                         } catch (error) {
                             setErrors({ request: error.toString() });
                         }
