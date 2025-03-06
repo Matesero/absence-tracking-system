@@ -1,7 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
-    content: ['./index.html', './src/**/*.{html,js,ts,jsx,tsx}'],
+    content: [
+        './src/**/*.{html,js,ts,jsx,tsx}',
+        './node_modules/react-tailwindcss-select/dist/index.esm.js',
+    ],
     theme: {
         extend: {
             colors: {
