@@ -18,6 +18,7 @@ module.exports = {
                     fairPink: '#FFEFE8',
                     romanSilver: '#8382A2',
                     orange: '#FF9900',
+                    red: '#950000',
                 },
                 secondary: {
                     DEFAULT: '#3772FF',

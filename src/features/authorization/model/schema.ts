@@ -29,12 +29,9 @@ export const schema = zod.object({
         .string()
         .min(1, 'Поле является обязательным')
         .min(8, 'Пароль должен состоять минимум из 8 символов')
-        .refine((value) => /[0-9]/.test(value), {
-            message: 'Пароль должен содержать цифры',
-        })
         .optional(),
 
-    fullname: zod
+    fullName: zod
         .string()
         .min(1, 'Поле является обязательным')
         .trim()

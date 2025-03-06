@@ -10,7 +10,7 @@ import { Button, InputField } from '~/shared/ui';
 const { RouteName } = sharedConfigRouter;
 
 export const LoginForm = () => {
-    const [errors, onSubmit] = useForm('login');
+    const [errors, , onSubmit] = useForm('login');
 
     const navigate = useNavigate();
     const handleRegisterClick = useCallback(() => {
@@ -35,7 +35,6 @@ export const LoginForm = () => {
                     error={errors?.['password'] ?? ''}
                 />
             </div>
-            {/*<Error error={errors?.['response'] || ''} />*/}
             <div className="flex flex-col gap-3">
                 <Button label="Войти" type="submit" />
                 <Button

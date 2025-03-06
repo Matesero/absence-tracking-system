@@ -1,27 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { FormWrapper } from './FormWrapper';
 import { useForm } from '../model';
 
-import { absenceSystemApi } from '~/shared/api';
 import { listToOptions } from '~/shared/lib/listToOptions';
 import { Button, InputField, CustomSelect as Select } from '~/shared/ui';
 
-const group = absenceSystemApi.group;
-
 export const RegistrationForm = () => {
-    const [errors, onSubmit] = useForm('register');
-    const [groups, setGroups] = useState<string[]>([]);
-
-    useEffect(() => {
-        const getGroups = async () => {
-            const groupsList = await group.getList({ isDeleted: false });
-
-            setGroups(groupsList.map((item) => item.groupNumber));
-        };
-
-        getGroups();
-    }, []);
+    const [errors, groups, onSubmit] = useForm('register');
 
     return (
         <FormWrapper title={'Регистрация'} onSubmit={onSubmit}>
@@ -29,9 +15,9 @@ export const RegistrationForm = () => {
                 <InputField
                     type="text"
                     label="ФИО"
-                    name="fullname"
+                    name="fullName"
                     placeholder={'Иванов Иван Иванович'}
-                    error={errors?.['fullname'] ?? ''}
+                    error={errors?.['fullName'] ?? ''}
                 />
                 <Select
                     label="Группа"
@@ -54,7 +40,6 @@ export const RegistrationForm = () => {
                     error={errors?.['password'] ?? ''}
                 />
             </div>
-            {/*<Error error={errors?.['response'] || ''} />*/}
             <div className="flex flex-col gap-3">
                 <Button label="Зарегистрироваться" type="submit" />
             </div>

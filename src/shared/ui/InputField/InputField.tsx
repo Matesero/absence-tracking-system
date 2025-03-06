@@ -6,6 +6,8 @@ type Props = {
     type: 'text' | 'password';
     error?: string;
     placeholder?: string;
+    disabled?: boolean;
+    value?: string | number;
 };
 
 export const InputField = ({
@@ -14,6 +16,8 @@ export const InputField = ({
     type,
     error,
     placeholder,
+    disabled,
+    value,
 }: Props) => {
     const [show, setShow] = useState(type === 'text');
 
@@ -38,6 +42,8 @@ export const InputField = ({
                     placeholder={placeholder}
                     className="w-full px-4 text-xl bg-transparent outline-none "
                     name={name}
+                    value={value}
+                    disabled={disabled}
                 />
                 {type === 'password' && (
                     <button

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Select from 'react-tailwindcss-select';
 
 type Option = {
@@ -11,14 +11,33 @@ type Props = {
     name: string;
     options: Option[];
     error?: string;
+    disabled?: boolean;
+    value?: string;
 };
 
-export const CustomSelect = ({ label, name, options, error }: Props) => {
+export const CustomSelect = ({
+    label,
+    name,
+    options,
+    error,
+    disabled,
+    value,
+}: Props) => {
     const [selectedValue, setValue] = useState<Option>(null);
 
     const handleChange = useCallback((value) => {
         setValue(value);
     }, []);
+
+    useEffect(() => {
+        if (value && options) {
+            options.forEach((option) => {
+                if (option.value === value) {
+                    setValue(option);
+                }
+            });
+        }
+    }, [value, options]);
 
     return (
         <div className="flex flex-col gap-1">
@@ -40,10 +59,11 @@ export const CustomSelect = ({ label, name, options, error }: Props) => {
                 value={selectedValue}
                 isClearable
                 placeholder=""
+                isDisabled={disabled}
                 classNames={{
                     menuButton: (value) => {
                         const isDisabled = value?.isDisabled;
-                        return `flex cursor-pointer flex-row h-12 border-s border-t border-e border-b px-1 text-xl ${!selectedValue ? 'text-gray-400' : 'text-black'} items-center ${error ? 'border-red-500' : 'border-primary-gray'} rounded-lg transition-all duration-300 !focus:outline-none !overflow-y-hidden ${isDisabled ? 'bg-primary-gray' : 'bg-white'} hover:border-gray-400 focus:border-primary-gray-500 focus:ring-blue-500/20`;
+                        return `flex flex-row h-12 border-s border-t border-e border-b px-1 text-xl ${!selectedValue ? 'text-gray-400' : 'text-black'} items-center ${error ? 'border-red-500' : 'border-primary-gray'} rounded-lg transition-all duration-300 !focus:outline-none !overflow-y-hidden ${isDisabled ? 'cursor-default' : 'cursor-pointer'} hover:border-gray-400 focus:border-primary-gray-500 focus:ring-blue-500/20`;
                     },
                     menu: 'absolute z-10 w-full bg-white shadow-lg border rounded-lg py-1 mt-1.5 text-sm text-gray-100',
                     listItem: (value) => {

@@ -6,7 +6,7 @@ type GetGroupsParams = {
 
 export const getList = async (params: GetGroupsParams) => {
     try {
-        const response = await requester.get('/group/list', params);
+        const response = await requester.get('/group/list', { params });
 
         return response.data;
     } catch (error) {

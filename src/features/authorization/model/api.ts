@@ -9,13 +9,13 @@ type LoginParams = {
 };
 
 type RegisterParams = {
-    fullname: string;
+    fullName: string;
     groupNumber?: number;
     email: string;
     password: string;
 };
 
-export const login = async (params: LoginParams): Promise<string> => {
+export const login = async (params: LoginParams): Promise<boolean> => {
     try {
         const response = await requester.post('/auth/login', params);
 
@@ -24,12 +24,14 @@ export const login = async (params: LoginParams): Promise<string> => {
         if (token) {
             cookieService.setToken(token);
         }
+
+        return true;
     } catch (error) {
         console.log('Login failed', error);
     }
 };
 
-export const register = async (params: RegisterParams): Promise<string> => {
+export const register = async (params: RegisterParams): Promise<boolean> => {
     try {
         const response = await requester.post('/auth/registration', params);
 
@@ -38,6 +40,8 @@ export const register = async (params: RegisterParams): Promise<string> => {
         if (token) {
             cookieService.setToken(token);
         }
+
+        return true;
     } catch (error) {
         console.log('Register failed', error);
     }
