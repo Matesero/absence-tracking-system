@@ -2,13 +2,13 @@ import axios, { AxiosError } from 'axios';
 
 import { sharedConfigEnvs } from '~/shared/config';
 
-const { MEDICAL_SYSTEM_HOST } = sharedConfigEnvs;
+const { API_HOST } = sharedConfigEnvs;
 
-export const medicalSystemRequester = axios.create({
-    baseURL: MEDICAL_SYSTEM_HOST,
+export const requester = axios.create({
+    baseURL: API_HOST,
 });
 
-medicalSystemRequester.interceptors.response.use(
+requester.interceptors.response.use(
     // потом сделать
     (response) => response,
     (error: AxiosError) => {

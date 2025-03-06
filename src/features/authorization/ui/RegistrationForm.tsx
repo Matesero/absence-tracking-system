@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { FormWrapper } from './FormWrapper';
 import { useForm } from '../model';
 
-import { Button, InputField } from '~/shared/ui';
+import { absenceSystemApi } from '~/shared/api';
+import { listToOptions } from '~/shared/lib/listToOptions';
+import { Button, InputField, CustomSelect as Select } from '~/shared/ui';
+
+const group = absenceSystemApi.group;
 
 export const RegistrationForm = () => {
     const [errors, onSubmit] = useForm('register');
+    const [groups, setGroups] = useState<string[]>([]);
+
+    useEffect(() => {
+        const getGroups = async () => {
+            const groupsList = await group.getList({ isDeleted: false });
+
+            setGroups(groupsList.map((item) => item.groupNumber));
+        };
+
+        getGroups();
+    }, []);
 
     return (
         <FormWrapper title={'Регистрация'} onSubmit={onSubmit}>
@@ -17,6 +32,12 @@ export const RegistrationForm = () => {
                     name="fullname"
                     placeholder={'Иванов Иван Иванович'}
                     error={errors?.['fullname'] ?? ''}
+                />
+                <Select
+                    label="Группа"
+                    name="groupNumber"
+                    error={errors?.['groupNumber'] ?? ''}
+                    options={listToOptions(groups)}
                 />
                 <InputField
                     type="text"
@@ -39,4 +60,4 @@ export const RegistrationForm = () => {
             </div>
         </FormWrapper>
     );
-}
+};

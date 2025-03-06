@@ -1,1 +1,1 @@
-export * as absenceSystemApi from './absenceSystem/base';
+export * as absenceSystemApi from './absenceSystem';

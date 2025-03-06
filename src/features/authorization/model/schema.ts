@@ -45,6 +45,11 @@ export const schema = zod.object({
             message: 'Некорректно введены ФИО',
         })
         .optional(),
+
+    groupNumber: zod
+        .string()
+        .transform((str) => Number(str))
+        .optional(),
 });
 
 export type Schema = zod.infer<typeof schema>;

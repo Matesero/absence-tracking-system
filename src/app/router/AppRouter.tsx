@@ -15,7 +15,10 @@ export const AppRouter = () => {
         <BrowserRouter>
             <Routes>
                 <Route path={RouteName.LOGIN_PAGE} element={<LoginPage />} />
-                <Route path={RouteName.REGISTRATION_PAGE} element={<RegistrationPage />} />
+                <Route
+                    path={RouteName.REGISTRATION_PAGE}
+                    element={<RegistrationPage />}
+                />
             </Routes>
         </BrowserRouter>
     );

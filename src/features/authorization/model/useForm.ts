@@ -25,7 +25,9 @@ export const useForm = (formType: Props): FormResult => {
 
         if (dataParse.success) {
             const { data } = dataParse;
-            const { email, password, fullname } = data;
+            const { email, password, fullname, groupNumber } = data;
+
+            console.log(data);
 
             switch (formType) {
                 case 'login':
@@ -33,17 +35,22 @@ export const useForm = (formType: Props): FormResult => {
                         try {
                             await login({ email, password });
                         } catch (error) {
-                            setErrors({ request: error.toString() });
+                            setErrors({ response: error.toString() });
                         }
                     }
                     break;
 
                 case 'register':
-                    if (fullname && email && password) {
+                    if (fullname && groupNumber && email && password) {
                         try {
-                            await register({ fullname, email, password });
+                            await register({
+                                fullname,
+                                groupNumber,
+                                email,
+                                password,
+                            });
                         } catch (error) {
-                            setErrors({ request: error.toString() });
+                            setErrors({ response: error.toString() });
                         }
                     }
             }

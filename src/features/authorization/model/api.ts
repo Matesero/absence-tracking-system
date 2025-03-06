@@ -1,7 +1,7 @@
 import { absenceSystemApi } from '~/shared/api';
 import { cookieService } from '~/shared/store';
 
-const requester = absenceSystemApi.medicalSystemRequester;
+const { requester } = absenceSystemApi.base;
 
 type LoginParams = {
     email: string;
@@ -10,11 +10,12 @@ type LoginParams = {
 
 type RegisterParams = {
     fullname: string;
+    groupNumber?: number;
     email: string;
     password: string;
-}
+};
 
-export const login = async (params: LoginParams) => {
+export const login = async (params: LoginParams): Promise<string> => {
     try {
         const response = await requester.post('/auth/login', params);
 
@@ -28,9 +29,9 @@ export const login = async (params: LoginParams) => {
     }
 };
 
-export const register = async (params: RegisterParams) => {
+export const register = async (params: RegisterParams): Promise<string> => {
     try {
-        const response = await requester.post('/auth/register', params);
+        const response = await requester.post('/auth/registration', params);
 
         const token = response.data.token;
 
@@ -40,4 +41,4 @@ export const register = async (params: RegisterParams) => {
     } catch (error) {
         console.log('Register failed', error);
     }
-}
+};
