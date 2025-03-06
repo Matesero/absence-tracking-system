@@ -34,7 +34,7 @@ export const schema = zod.object({
         })
         .optional(),
 
-    name: zod
+    fullname: zod
         .string()
         .min(1, 'Поле является обязательным')
         .trim()
@@ -44,6 +44,11 @@ export const schema = zod.object({
         .refine((value) => /^([А-Я][а-я]+ ){2}[А-Я][а-я]+$/.test(value), {
             message: 'Некорректно введены ФИО',
         })
+        .optional(),
+
+    groupNumber: zod
+        .string()
+        .transform((str) => Number(str))
         .optional(),
 });
 

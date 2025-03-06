@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
+import { Layout } from '~/app/layout';
 import { authorizationFeature } from '~/features';
 
 const { LoginForm } = authorizationFeature.ui;
 
 export const LoginPage = () => {
     return (
-        <LoginForm />
+        <Layout>
+            <LoginForm />
+        </Layout>
     );
 };
