@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 
 import { sharedConfigEnvs } from '~/shared/config';
 
@@ -9,15 +10,22 @@ export const requester = axios.create({
 });
 
 requester.interceptors.response.use(
-    // потом сделать
     (response) => response,
     (error: AxiosError) => {
         if (error.response) {
-            const { status } = error.response;
+            const { data } = error.response;
+            const { errorDetails, message } = data;
 
-            switch (status) {
-                case 400:
-                    break;
+            if (errorDetails.keys) {
+                for (const key in errorDetails) {
+                    toast.error(errorDetails[key], {
+                        position: 'bottom-right',
+                    });
+                }
+            } else {
+                toast.error(message, {
+                    position: 'bottom-right',
+                });
             }
         }
 
