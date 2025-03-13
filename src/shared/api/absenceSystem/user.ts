@@ -59,3 +59,25 @@ export const patchProfile = createAsyncThunk<
         return rejectWithValue(error.message);
     }
 });
+
+export const getUsers = async (email? : string, isBlocked? : boolean, fullName? : string,
+                               groupNumber? : number, role? : string) => {
+    try {
+        const response = await requester.get('/user', {
+            params: {
+                email,
+                isBlocked,
+                fullName,
+                groupNumber,
+                role
+            },
+            headers: {
+                Authorization: `Bearer ${cookieService.getToken()}`,
+            },
+        });
+        console.log(response.data)
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}

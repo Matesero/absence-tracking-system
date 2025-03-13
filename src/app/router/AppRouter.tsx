@@ -6,11 +6,13 @@ import { ProtectedRoute } from '~/app/router/ProtectedRoute';
 import { loginPageUi } from '~/pages/login';
 import { profilePageUi } from '~/pages/profile';
 import { registrationPageUi } from '~/pages/registration';
+import { usersListPageUi } from '~/pages/users-list';
 import { sharedConfigRouter } from '~/shared/config';
 
 const { LoginPage } = loginPageUi;
 const { RegistrationPage } = registrationPageUi;
 const { ProfilePage } = profilePageUi;
+const { UsersListPage } = usersListPageUi;
 
 const { RouteName } = sharedConfigRouter;
 
@@ -31,6 +33,13 @@ export const AppRouter = () => {
                             element={<ProfilePage />}
                         />
                     </Route>
+                </Route>
+
+                <Route element={<ProtectedRoute />}>
+                    <Route
+                        path={RouteName.USERS_LIST_PAGE}
+                        element={<UsersListPage />}
+                    />
                 </Route>
             </Routes>
         </BrowserRouter>
