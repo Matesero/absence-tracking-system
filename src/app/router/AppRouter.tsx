@@ -4,12 +4,14 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { loginPageUi } from '~/pages/login';
 import { profilePageUi } from '~/pages/profile';
 import { registrationPageUi } from '~/pages/registration';
+import { usersListPageUi } from '~/pages/users-list';
 import { sharedConfigRouter } from '~/shared/config';
 import { ProtectedRoute } from '~/app/router/ProtectedRoute';
 
 const { LoginPage } = loginPageUi;
 const { RegistrationPage } = registrationPageUi;
 const { ProfilePage } = profilePageUi;
+const { UsersListPage } = usersListPageUi;
 
 const { RouteName } = sharedConfigRouter;
 
@@ -27,6 +29,13 @@ export const AppRouter = () => {
                     <Route
                         path={RouteName.PROFILE_PAGE}
                         element={<ProfilePage />}
+                    />
+                </Route>
+
+                <Route element={<ProtectedRoute />}>
+                    <Route
+                        path={RouteName.USERS_LIST_PAGE}
+                        element={<UsersListPage />}
                     />
                 </Route>
             </Routes>
