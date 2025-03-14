@@ -50,10 +50,19 @@ export const useForm = (typeList: Props) => {
             }
         };
 
+        const getUsersList = async () => {
+            const response = await getUsers();
+            setUsers(response.content);
+        };
+
         getGroups();
 
         if (typeList === 'absences' && userRole) {
             getAbsences();
+        }
+
+        if (typeList === 'users' && userRole) {
+            getUsersList();
         }
     }, [userRole, typeList]);
 
