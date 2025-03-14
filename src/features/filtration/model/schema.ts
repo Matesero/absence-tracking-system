@@ -36,7 +36,11 @@ export const schema = zod.object({
 
     role: zod.string().optional(),
 
-    blocked: zod.boolean().default(false).optional(),
+    blocked: zod
+        .string()
+        .default('false')
+        .transform(val => val === 'on')
+        .optional(),
 
     dateStart: zod
         .string()
