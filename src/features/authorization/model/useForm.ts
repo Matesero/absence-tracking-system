@@ -58,7 +58,7 @@ export const useForm = (formType: Props): FormResult => {
 
                             if (successful) {
                                 appDispatch(setIsAuth());
-                                navigate(RouteName.PROFILE_PAGE);
+                                navigate(RouteName.MAIN_PAGE);
                             }
                         } catch (error) {
                             setErrors({ response: error.toString() });
@@ -78,7 +78,7 @@ export const useForm = (formType: Props): FormResult => {
 
                             if (successful) {
                                 appDispatch(setIsAuth());
-                                navigate(RouteName.PROFILE_PAGE);
+                                navigate(RouteName.MAIN_PAGE);
                             }
                         } catch (error) {
                             setErrors({ response: error.toString() });

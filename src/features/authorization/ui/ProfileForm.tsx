@@ -52,14 +52,18 @@ export const ProfileForm = () => {
                     disabled={!isEditing}
                     error={errors?.['fullName'] ?? ''}
                 />
-                <Select
-                    label="Группа"
-                    name="groupNumber"
-                    value={isEditing ? undefined : formValues.group.groupNumber}
-                    error={errors?.['groupNumber'] ?? ''}
-                    disabled={!isEditing}
-                    options={listToOptions(groups)}
-                />
+                {user.role === 'student' && (
+                    <Select
+                        label="Группа"
+                        name="groupNumber"
+                        value={
+                            isEditing ? undefined : formValues.group.groupNumber
+                        }
+                        error={errors?.['groupNumber'] ?? ''}
+                        disabled={!isEditing}
+                        options={listToOptions(groups)}
+                    />
+                )}
                 <InputField
                     type="text"
                     label="Email"

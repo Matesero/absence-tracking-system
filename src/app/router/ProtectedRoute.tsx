@@ -22,6 +22,7 @@ export const ProtectedRoute = ({ redirectPath = '/login' }: Props) => {
                 try {
                     await appDispatch(getProfile());
                 } catch (error) {
+                    console.log('Error fetch profile', error)
                     appDispatch(logout());
                 }
             } else {

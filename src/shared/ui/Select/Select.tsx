@@ -13,6 +13,7 @@ type Props = {
     error?: string;
     disabled?: boolean;
     value?: string;
+    isMultiple?: boolean;
 };
 
 export const CustomSelect = ({
@@ -22,8 +23,9 @@ export const CustomSelect = ({
     error,
     disabled,
     value,
+    isMultiple,
 }: Props) => {
-    const [selectedValue, setValue] = useState<Option>(null);
+    const [selectedValue, setValue] = useState<Option | null>(null);
 
     const handleChange = useCallback((value) => {
         setValue(value);
@@ -38,6 +40,20 @@ export const CustomSelect = ({
             });
         }
     }, [value, options]);
+
+    const selectedToString = useCallback(() => {
+        let value = '';
+
+        if (Array.isArray(selectedValue)) {
+            selectedValue.forEach((selValue) => {
+                value += `${selValue.value};`;
+            });
+        } else if (selectedValue !== null) {
+            value = selectedValue.value;
+        }
+
+        return value;
+    }, [selectedValue]);
 
     return (
         <div className="flex flex-col gap-1">
@@ -60,6 +76,7 @@ export const CustomSelect = ({
                 isClearable
                 placeholder=""
                 isDisabled={disabled}
+                isMultiple={isMultiple}
                 classNames={{
                     menuButton: (value) => {
                         const isDisabled = value?.isDisabled;
@@ -73,7 +90,7 @@ export const CustomSelect = ({
                 }}
             />
 
-            <input value={selectedValue?.value} name={name} type="hidden" />
+            <input value={selectedToString()} name={name} type="hidden" />
         </div>
     );
 };

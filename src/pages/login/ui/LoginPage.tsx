@@ -5,7 +5,5 @@ import { authorizationFeature } from '~/features';
 const { LoginForm } = authorizationFeature.ui;
 
 export const LoginPage = () => {
-    return (
-        <LoginForm />
-    );
+    return <LoginForm />;
 };

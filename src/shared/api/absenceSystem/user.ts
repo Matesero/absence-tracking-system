@@ -3,15 +3,17 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { requester } from './base';
 
 import { sharedConfigTypes } from '~/shared/config';
-import { cookieService } from '~/shared/store';
+import { getToken } from '~/shared/store/cookie';
 
 export const getProfile = createAsyncThunk<sharedConfigTypes.User, void>(
     'user/getProfile',
     async (_, { rejectWithValue }) => {
+        const token = getToken();
+
         try {
             const response = await requester.get('/user/profile', {
                 headers: {
-                    Authorization: `Bearer ${cookieService.getToken()}`,
+                    Authorization: `Bearer ${token}`,
                 },
             });
 
@@ -25,7 +27,7 @@ export const getProfile = createAsyncThunk<sharedConfigTypes.User, void>(
 export const logout = createAsyncThunk<void, void>(
     'user/logout',
     async (_, { rejectWithValue }) => {
-        const token = cookieService.getToken();
+        const token = getToken();
 
         try {
             await requester.post(
@@ -47,10 +49,12 @@ export const patchProfile = createAsyncThunk<
     sharedConfigTypes.User,
     { [key: string]: string | number }
 >('user/patchProfile', async (params, { rejectWithValue }) => {
+    const token = getToken();
+
     try {
         const response = await requester.patch('/user/profile', params, {
             headers: {
-                Authorization: `Bearer ${cookieService.getToken()}`,
+                Authorization: `Bearer ${token}`,
             },
         });
         console.log(response);
@@ -60,24 +64,31 @@ export const patchProfile = createAsyncThunk<
     }
 });
 
-export const getUsers = async (email? : string, isBlocked? : boolean, fullName? : string,
-                               groupNumber? : number, role? : string) => {
+export const getUsers = async (
+    email?: string,
+    isBlocked?: boolean,
+    fullName?: string,
+    groupNumber?: number,
+    role?: string,
+) => {
     try {
+        const token = getToken();
+
         const response = await requester.get('/user', {
             params: {
                 email,
                 isBlocked,
                 fullName,
                 groupNumber,
-                role
+                role,
             },
             headers: {
-                Authorization: `Bearer ${cookieService.getToken()}`,
+                Authorization: `Bearer ${token}`,
             },
         });
-        console.log(response.data)
+
         return response.data;
     } catch (error) {
         console.log(error);
     }
-}
+};

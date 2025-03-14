@@ -1,1 +1,2 @@
-export * from './UsersFilter'
+export * from './UsersFilter';
+export * from './AbsencesFilter';

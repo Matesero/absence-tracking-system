@@ -18,4 +18,7 @@ export default defineConfig({
         },
     },
     plugins: [react(), svgr()],
+    optimizeDeps: {
+        include: ['@mui/material', '@mui/x-date-pickers'],
+    },
 });

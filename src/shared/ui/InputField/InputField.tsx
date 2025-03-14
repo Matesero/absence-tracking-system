@@ -40,7 +40,7 @@ export const InputField = ({
                 <input
                     type={show ? 'text' : 'password'}
                     placeholder={placeholder}
-                    className="w-full px-4 text-xl bg-transparent outline-none "
+                    className="w-full px-4 text-xl bg-transparent outline-none"
                     name={name}
                     value={value}
                     disabled={disabled}

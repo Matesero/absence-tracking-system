@@ -36,7 +36,7 @@ export const Navbar = () => {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [ ]);
+    });
 
     return (
         <nav>
@@ -71,7 +71,9 @@ export const Navbar = () => {
                                     >
                                         <button
                                             onClick={() =>
-                                                setIsDropdownOpen(prevState => !prevState)
+                                                setIsDropdownOpen(
+                                                    (prevState) => !prevState,
+                                                )
                                             }
                                             className="text-white text-2xl font-semibold"
                                         >
@@ -81,7 +83,9 @@ export const Navbar = () => {
                                             <ul className="absolute left-1/2 transform -translate-x-1/2 mt-2 bg-white text-black rounded-custom shadow-lg z-20 w-40">
                                                 <li>
                                                     <a
-                                                        onClick={handleProfileClick}
+                                                        onClick={
+                                                            handleProfileClick
+                                                        }
                                                         className="block text-xl text-center w-full px-6 py-3 rounded-t-custom text-black hover:bg-gray-200 cursor-pointer"
                                                     >
                                                         Профиль
@@ -89,7 +93,9 @@ export const Navbar = () => {
                                                 </li>
                                                 <li>
                                                     <a
-                                                        onClick={handleLogoutClick}
+                                                        onClick={
+                                                            handleLogoutClick
+                                                        }
                                                         className="block text-xl text-center w-full px-6 py-3 rounded-b-custom text-black hover:bg-gray-200 cursor-pointer"
                                                     >
                                                         Выход
