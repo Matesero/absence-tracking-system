@@ -87,7 +87,7 @@ export const useForm = (formType: Props): FormResult => {
                     break;
 
                 case 'profile':
-                    if (fullName && email && groupNumber) {
+                    if (fullName && email) {
                         try {
                             appDispatch(
                                 patchProfile({

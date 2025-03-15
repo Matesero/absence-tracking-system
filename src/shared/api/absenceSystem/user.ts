@@ -47,7 +47,7 @@ export const logout = createAsyncThunk<void, void>(
 
 export const patchProfile = createAsyncThunk<
     sharedConfigTypes.User,
-    { [key: string]: string | number }
+    { [key: string]: string | number | undefined }
 >('user/patchProfile', async (params, { rejectWithValue }) => {
     const token = getToken();
 
