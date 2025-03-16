@@ -53,3 +53,19 @@ export const getMyList = async (params: GetAbsencesParams) => {
         console.log('Get absences failed', error);
     }
 };
+
+export const getById = async (passRequestId: string) => {
+    try {
+        const token = getToken();
+
+        const response = await requester.get(`/pass/request/${passRequestId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        console.log('Get absence by id failed', error);
+    }
+}

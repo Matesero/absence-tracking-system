@@ -1,13 +1,14 @@
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
-import { TeacherUi } from './TeacherUi';
-
+import { TeacherView } from '~/features/pass/ui';
 import { userSlice } from '~/shared/store';
 
 const { selectors } = userSlice;
 
 export const PassPage = () => {
     const user = useSelector(selectors.user);
+    const { id } = useParams<{ id: string }>();
 
     return (
         <div
@@ -18,8 +19,10 @@ export const PassPage = () => {
                     Пропуск
                 </div>
                 <div className="bg-white p-4 rounded-b-lg shadow-md flex flex-col gap-4">
-                    {user?.role === 'teacher' && (
-                        <TeacherUi />
+                    {user?.role === 'teacher' && id !== undefined && (
+                        <TeacherView
+                            id={id}
+                        />
                     )}
                 </div>
             </div>
