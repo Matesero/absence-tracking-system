@@ -43,6 +43,10 @@ export const TeacherView = ({ id }: Props) => {
                 <p className={textSize}>{data.user.fullName}</p>
             </div>
             <div className="flex gap-1">
+                <p className={textSize}>Email:</p>
+                <p className={textSize}>{data.user.email}</p>
+            </div>
+            <div className="flex gap-1">
                 <p className={textSize}>Группа:</p>
                 <p className={textSize}>{data.user.group.groupNumber}</p>
             </div>
@@ -52,7 +56,9 @@ export const TeacherView = ({ id }: Props) => {
                     <button
                         key={minioFile.id}
                         className={`${textSize} ml-4 self-start underline`}
-                        onClick={async () => { await downloadFile(minioFile.id, minioFile.name)}}
+                        onClick={async () => {
+                            await downloadFile(minioFile.id, minioFile.name)
+                        }}
                     >
                         {minioFile.name}
                     </button>
