@@ -16,6 +16,12 @@ type GetAbsencesParams = {
     pageable: sharedConfigTypes.Pageable;
 };
 
+type UpdateAbsenceParams = {
+    dateStart?: Date;
+    dateEnd?: Date;
+    message?: string;
+}
+
 export const getList = async (params: GetAbsencesParams) => {
     try {
         const token = getToken();
@@ -67,5 +73,39 @@ export const getById = async (passRequestId: string) => {
         return response.data;
     } catch (error) {
         console.log('Get absence by id failed', error);
+    }
+}
+
+export const updateById = async (passRequestId: string,
+                                 params: UpdateAbsenceParams) => {
+    try {
+        const token = getToken();
+
+        const response = await requester.patch(`/pass/request/${passRequestId}`,
+            params, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        console.log('Update absence failed', error);
+    }
+}
+
+export const deleteById = async (passRequestId: string) => {
+    try {
+        const token = getToken();
+
+        const response = await requester.delete(`/pass/request/${passRequestId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        console.log('Delete absence by id failed', error);
     }
 }

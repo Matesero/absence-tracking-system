@@ -5,12 +5,11 @@ import { mapStatusTo } from './statusMapper';
 
 import { absenceSystemApi } from '~/shared/api';
 
-
 const pass = absenceSystemApi.pass;
 const file = absenceSystemApi.file;
 const deanery = absenceSystemApi.deanery;
 
-export const useForm = (id: string) => {
+export const useForm = (id: string, formType?: string) => {
     const [data, setData] = useState()
 
     useEffect(() => {
@@ -49,10 +48,24 @@ export const useForm = (id: string) => {
 
         if (dataParse.success) {
             const { data } = dataParse;
-            
-            const status = mapStatusTo(data.status);
 
-            await deanery.acceptPass(id, { isAccepted: status });
+            switch (formType) {
+                case 'deanery':
+                    if (data.status) {
+                        const status = mapStatusTo(data.status);
+                        await deanery.acceptPass(id, { isAccepted: status });
+                    }
+                    break;
+
+                case 'student':
+                    setData(await pass.updateById(id, {
+                        dateStart: data.dateStart,
+                        dateEnd: data.dateEnd,
+                        message: data.message,
+                    }));
+
+                    break;
+            }
         }
     }
 

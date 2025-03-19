@@ -1,6 +1,7 @@
 import { DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { Dayjs } from 'dayjs';
 import React from 'react';
 
 import 'dayjs/locale/ru';
@@ -10,9 +11,10 @@ type Props = {
     name: string;
     error?: string;
     disabled?: boolean;
+    value?: Dayjs;
 };
 
-export const CustomDatepicker = ({ label, name, error, disabled }: Props) => {
+export const CustomDatepicker = ({ label, name, error, disabled, value }: Props) => {
     return (
         <div className="flex flex-col gap-1">
             <div className="flex flex-row items-center">
@@ -37,6 +39,7 @@ export const CustomDatepicker = ({ label, name, error, disabled }: Props) => {
                     <DatePicker
                         name={name}
                         disabled={disabled}
+                        value={value}
                         slotProps={{
                             field: {
                                 clearable: true,

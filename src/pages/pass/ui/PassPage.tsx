@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { TeacherView, DeaneryView } from '~/features/pass/ui';
+import { TeacherView, DeaneryView, StudentView } from '~/features/pass/ui';
 import { userSlice } from '~/shared/store';
 
 const { selectors } = userSlice;
@@ -21,9 +21,9 @@ export const PassPage = () => {
                 <div className="bg-white p-4 rounded-b-lg shadow-md flex flex-col gap-4">
                     {id !== undefined && (user?.role === 'teacher' ? (
                         <TeacherView id={id} />
-                    ) : user?.role === 'deanery' ? (
+                    ) : user?.role === 'deanery' || user?.role === 'admin' ? (
                         <DeaneryView id={id} />
-                    ) : null)}
+                    ) : <StudentView id={id} />)}
                 </div>
             </div>
         </div>
