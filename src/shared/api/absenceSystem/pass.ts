@@ -1,5 +1,3 @@
-import qs from 'qs';
-
 import { requester } from './base';
 
 import { sharedConfigTypes } from '~/shared/config';
@@ -20,10 +18,17 @@ export const getList = async (params: GetAbsencesParams) => {
     try {
         const token = getToken();
 
+        const requestParams = {
+            ...params,
+            page: params.pageable.page,
+            size: params.pageable.size,
+            sort: params.pageable.sort,
+        };
+
+        delete requestParams.pageable;
+
         const response = await requester.get('/pass/request/pageable', {
-            params,
-            paramsSerializer: (params) =>
-                qs.stringify(params, { arrayFormat: 'comma' }),
+            params: requestParams,
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -32,6 +37,7 @@ export const getList = async (params: GetAbsencesParams) => {
         return response.data;
     } catch (error) {
         console.log('Get absences failed', error);
+        throw error; // Пробрасываем ошибку для обработки в вызывающем коде
     }
 };
 
@@ -39,10 +45,17 @@ export const getMyList = async (params: GetAbsencesParams) => {
     try {
         const token = getToken();
 
+        const requestParams = {
+            ...params,
+            page: params.pageable.page,
+            size: params.pageable.size,
+            sort: params.pageable.sort,
+        };
+
+        delete requestParams.pageable;
+
         const response = await requester.get('/pass/request/my/pageable', {
-            params,
-            paramsSerializer: (params) =>
-                qs.stringify(params, { arrayFormat: 'comma' }),
+            params: requestParams,
             headers: {
                 Authorization: `Bearer ${token}`,
             },

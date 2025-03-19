@@ -26,18 +26,23 @@ export const Absence = ({
                         ФИО:
                         <span>{user.fullName}</span>
                     </p>
-                    <p className={`flex gap-1 ${textSize}`}>
-                        Роль:
-                        <span className={textSize}>
-                            {userRole.toLowerCase()}
-                        </span>
+                </div>
+                <div
+                    className={`flex flex-row font-semibold text-primary-tuftsBlue ${textSize} gap-4`}
+                >
+                    {userRole === 'student' && isAccepted === true && (
+                        <button>Продлить</button>
+                    )}
+                    <p
+                        className={`flex gap-1 ${isAccepted === null ? 'text-primary-orange' : isAccepted ? 'text-green-500' : 'text-red-500'}`}
+                    >
+                        {isAccepted === null
+                            ? 'На рассмотрении'
+                            : isAccepted
+                              ? 'Принято'
+                              : 'Отклонено'}
                     </p>
                 </div>
-                <p
-                    className={`flex gap-1 ${textSize} ${isAccepted ? 'text-green-500' : 'text-primary-orange'}`}
-                >
-                    {isAccepted ? 'Принято' : 'На рассмотрении'}
-                </p>
             </div>
             <p className={`flex gap-1 ${textSize}`}>
                 Период:
@@ -52,14 +57,37 @@ export const Absence = ({
                 </p>
             )}
             {extendPassTimeRequests.length > 0 && (
-                <p
-                    className={
-                        'flex gap-1 text-lg text-primary-gray leading-[1.2]'
-                    }
-                >
-                    Запросы на продление:
-                    <span>{extendPassTimeRequests.length}</span>
-                </p>
+                <div>
+                    <p className="flex gap-1 text-lg text-primary-gray leading-[1.2]">
+                        Запросы на продление:
+                    </p>
+
+                    {extendPassTimeRequests.map((request, index) => (
+                        <p
+                            className="ms-10 mt-1 flex text-lg rounded-3xl px-3 font-semibold justify-between border-b-2 p-0.5 transition-colors duration-300 hover:bg-gray-300 hover:cursor-pointer"
+                            key={index}
+                        >
+                            {format(request.dateEnd, 'd MMMM yyyy', {
+                                locale: ru,
+                            })}
+                            <span
+                                className={
+                                    request.isAccepted === null
+                                        ? 'text-primary-orange'
+                                        : request.isAccepted
+                                          ? 'text-green-500'
+                                          : 'text-red-500'
+                                }
+                            >
+                                {request.isAccepted === null
+                                    ? 'На рассмотрении'
+                                    : request.isAccepted
+                                      ? 'Принято'
+                                      : 'Отклонено'}
+                            </span>
+                        </p>
+                    ))}
+                </div>
             )}
         </div>
     );

@@ -57,7 +57,7 @@ export const patchProfile = createAsyncThunk<
                 Authorization: `Bearer ${token}`,
             },
         });
-        console.log(response);
+
         return response.data;
     } catch (error) {
         return rejectWithValue(error.message);

@@ -32,7 +32,7 @@ export type Pass = {
     dateEnd: Date;
     minioFiles: File[];
     extendPassTimeRequests: Pass[];
-    isAccepted: boolean;
+    isAccepted: boolean | null;
     createTimeStamp: Date;
 };
 

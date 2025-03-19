@@ -14,6 +14,7 @@ type Props = {
     groups: string[];
     onSubmit: FormEventHandler<HTMLFormElement>;
     userRole: sharedConfigTypes.Roles;
+    onCreatingClick: () => void;
 };
 
 export const AbsencesFilter = ({
@@ -21,6 +22,7 @@ export const AbsencesFilter = ({
     groups,
     onSubmit,
     userRole,
+    onCreatingClick,
 }: Props) => {
     return (
         <div className="rounded-3xl w-full border-[1px] border-gray-300 drop-shadow-lg">
@@ -65,7 +67,7 @@ export const AbsencesFilter = ({
                                 error={errors?.['isAccepted'] ?? ''}
                                 options={listToOptions([
                                     'Принятые',
-                                    'Непринятые',
+                                    'Отклоненные',
                                 ])}
                             />
 
@@ -77,7 +79,15 @@ export const AbsencesFilter = ({
                             {/*/>*/}
                         </div>
 
-                        <div className="flex w-fit items-end justify-self-end">
+                        <div className="flex w-fit items-end justify-self-end gap-4">
+                            {userRole === 'student' && (
+                                <Button
+                                    label="Создать пропуск"
+                                    type="button"
+                                    bgColor="bg-green-600"
+                                    onClick={onCreatingClick}
+                                />
+                            )}
                             <Button label="Применить" type="submit" />
                         </div>
                     </div>

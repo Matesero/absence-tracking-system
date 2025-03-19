@@ -92,7 +92,7 @@ export const useForm = (formType: Props): FormResult => {
                             appDispatch(
                                 patchProfile({
                                     fullName,
-                                    groupNumber,
+                                    group: groupNumber,
                                     email,
                                 }),
                             );

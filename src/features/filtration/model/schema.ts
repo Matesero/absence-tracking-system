@@ -39,7 +39,7 @@ export const schema = zod.object({
     blocked: zod
         .string()
         .default('false')
-        .transform(val => val === 'on')
+        .transform((val) => val === 'on')
         .optional(),
 
     dateStart: zod

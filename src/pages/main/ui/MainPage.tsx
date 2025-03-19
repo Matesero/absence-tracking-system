@@ -1,8 +1,8 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { filtrationFeature } from '~/features';
+import { filtrationFeature, creationFeature } from '~/features';
 import { useForm } from '~/features/filtration/model';
 import { getProfile } from '~/shared/api/absenceSystem/user';
 import { RouteName } from '~/shared/config/router';
@@ -13,6 +13,7 @@ import { Absence, Loading } from '~/shared/ui';
 const { selectors } = userSlice;
 const { AbsencesFilter } = filtrationFeature.ui;
 const { rolesMapper } = filtrationFeature.model;
+const { CreationForm } = creationFeature.ui;
 
 export const MainPage = () => {
     const user = useSelector(selectors.user);
@@ -20,7 +21,7 @@ export const MainPage = () => {
     const isLoading = useSelector(selectors.isLoading);
     const navigate = useNavigate();
     const appDispatch = useAppDispatch();
-
+    const [isCreating, setIsCreating] = useState<boolean>(false);
     const [, absences, errors, groups, onSubmit] = useForm('absences');
 
     useEffect(() => {
@@ -31,11 +32,11 @@ export const MainPage = () => {
         if (isAuth) {
             fetchProfile();
         }
-    }, [ ]);
+    }, []);
 
     const handleRegisterClick = useCallback(() => {
         navigate(RouteName.REGISTRATION_PAGE);
-    }, [ ]);
+    }, []);
 
     if (isLoading) {
         return <Loading />;
@@ -62,11 +63,18 @@ export const MainPage = () => {
                 </>
             ) : (
                 <>
+                    {isCreating && user?.role === 'student' && (
+                        <CreationForm
+                            onCancelClick={() => setIsCreating(false)}
+                        />
+                    )}
+
                     <AbsencesFilter
                         errors={errors}
                         groups={groups}
                         onSubmit={onSubmit}
                         userRole={user?.role}
+                        onCreatingClick={() => setIsCreating(true)}
                     />
                     {absences?.map((absence) => (
                         <Absence
@@ -74,6 +82,7 @@ export const MainPage = () => {
                             userRole={rolesMapper.mapRoleFrom(
                                 absence.user.role,
                             )}
+                            onExtendClick={() => {}}
                             key={absence.id}
                         />
                     ))}

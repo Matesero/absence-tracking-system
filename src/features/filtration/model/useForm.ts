@@ -34,7 +34,7 @@ export const useForm = (typeList: Props) => {
             const params = {
                 pageable: {
                     page: 0,
-                    size: 10,
+                    size: 100000,
                     sort: '',
                 },
             };
@@ -87,8 +87,8 @@ export const useForm = (typeList: Props) => {
             const isAccepted = data.isAccepted;
             const pageable = {
                 page: 0,
-                size: 10,
-                sort: 'ASC',
+                size: 100000,
+                sort: '',
             };
 
             if (typeList === 'users') {

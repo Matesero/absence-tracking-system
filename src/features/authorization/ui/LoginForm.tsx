@@ -39,7 +39,7 @@ export const LoginForm = () => {
                 <Button label="Войти" type="submit" />
                 <Button
                     label="Зарегистрироваться"
-                    bgColor="primary-gray"
+                    bgColor="bg-primary-gray"
                     onClick={handleRegisterClick}
                 />
             </div>

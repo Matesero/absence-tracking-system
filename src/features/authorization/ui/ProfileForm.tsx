@@ -80,12 +80,14 @@ export const ProfileForm = () => {
                 )}
                 <Button
                     label={isEditing ? 'Отмена' : 'Редактировать'}
-                    bgColor={isEditing ? 'primary-gray' : 'primary-orange'}
+                    bgColor={
+                        isEditing ? 'bg-primary-gray' : 'bg-primary-orange'
+                    }
                     onClick={handleCancel}
                 />
                 <Button
                     label="Выйти из аккаунта"
-                    bgColor="primary-red"
+                    bgColor="bg-primary-red"
                     onClick={handleLogout}
                 />
             </div>
