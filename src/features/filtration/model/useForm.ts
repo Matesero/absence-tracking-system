@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+import { ru } from 'date-fns/locale';
 import { FormEventHandler, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -10,7 +12,7 @@ import { userSlice } from '~/shared/store';
 
 type ErrorsType = { [key: string]: string };
 
-type Props = 'users' | 'absences';
+type Props = 'users' | 'absences' | 'report';
 
 const group = absenceSystemApi.group;
 const pass = absenceSystemApi.pass;
@@ -129,6 +131,44 @@ export const useForm = (typeList: Props) => {
 
                         setAbsences(response.content);
                     }
+                } catch (error) {
+                    setErrors({ response: error.toString() });
+                }
+            }
+
+            if (typeList === 'report') {
+                try {
+                    if (dateStart && dateEnd && groupNumbers?.length > 0) {
+                        const response = await pass.getReport({
+                            dateStart,
+                            dateEnd,
+                            groupIds: groupNumbers,
+                        });
+
+                        if (response.data) {
+                            const fileName = `report ${format(dateStart, 'dd-MM-yyyy', { locale: ru })} - ${format(dateEnd, 'dd-MM-yyyy', { locale: ru })}.xlsx`;
+
+                            const blob = new Blob([response.data], {
+                                type: response.headers['content-type'] || 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // Тип файла (Excel)
+                            });
+
+                            const url = window.URL.createObjectURL(blob);
+                            const link = document.createElement('a');
+                            link.href = url;
+
+                            link.setAttribute('download', fileName);
+                            document.body.appendChild(link);
+                            link.click();
+
+                            window.URL.revokeObjectURL(url);
+                            document.body.removeChild(link);
+                        }
+                    } else {
+                        setErrors({
+                            dateStart: dateStart ? '' : 'Поле является обязательным',
+                            dateEnd: dateEnd ? '' : 'Поле является обязательным',
+                            groupNumbers: groupNumbers?.length ? '' : 'Поле является обязательным',
+                        });                    }
                 } catch (error) {
                     setErrors({ response: error.toString() });
                 }

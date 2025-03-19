@@ -4,4 +4,5 @@ export const RouteName = {
     PROFILE_PAGE: '/profile',
     USERS_LIST_PAGE: '/users',
     MAIN_PAGE: '/',
+    REPORT_PAGE: '/report',
 };

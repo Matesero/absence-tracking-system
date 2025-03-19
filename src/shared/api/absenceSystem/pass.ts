@@ -1,3 +1,5 @@
+import qs from 'qs';
+
 import { requester } from './base';
 
 import { sharedConfigTypes } from '~/shared/config';
@@ -29,6 +31,8 @@ export const getList = async (params: GetAbsencesParams) => {
 
         const response = await requester.get('/pass/request/pageable', {
             params: requestParams,
+            paramsSerializer: (params) =>
+                qs.stringify(params, { arrayFormat: 'comma' }),
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -37,7 +41,6 @@ export const getList = async (params: GetAbsencesParams) => {
         return response.data;
     } catch (error) {
         console.log('Get absences failed', error);
-        throw error; // Пробрасываем ошибку для обработки в вызывающем коде
     }
 };
 
@@ -56,12 +59,40 @@ export const getMyList = async (params: GetAbsencesParams) => {
 
         const response = await requester.get('/pass/request/my/pageable', {
             params: requestParams,
+            paramsSerializer: (params) =>
+                qs.stringify(params, { arrayFormat: 'comma' }),
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
 
         return response.data;
+    } catch (error) {
+        console.log('Get absences failed', error);
+    }
+};
+
+type GetReportParams = {
+    dateStart: Date;
+    dateEnd: Date;
+    groupIds: number[];
+};
+
+export const getReport = async (params: GetReportParams) => {
+    try {
+        const token = getToken();
+
+        const response = await requester.get('/report', {
+            params,
+            paramsSerializer: (params) =>
+                qs.stringify(params, { arrayFormat: 'comma' }),
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            responseType: 'arraybuffer',
+        });
+
+        return response;
     } catch (error) {
         console.log('Get absences failed', error);
     }

@@ -1,25 +1,38 @@
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { sharedConfigTypes } from '~/shared/config';
 
 export const Absence = ({
-    user,
-    userRole,
-    dateStart,
-    dateEnd,
-    minioFiles,
-    extendPassTimeRequests,
-    isAccepted,
-}: sharedConfigTypes.Pass & { userRole: string }) => {
+                            user,
+                            userRole,
+                            id,
+                            dateStart,
+                            dateEnd,
+                            minioFiles,
+                            extendPassTimeRequests,
+                            isAccepted,
+                        }: sharedConfigTypes.Pass & { userRole: string }) => {
+    const navigate = useNavigate();
     const textSize = 'text-xl';
 
     const formattedStart = format(dateStart, 'd MMMM yyyy', { locale: ru });
     const formattedEnd = format(dateEnd, 'd MMMM yyyy', { locale: ru });
 
+    const handleExtendClick = (event: React.MouseEvent) => {
+        event.stopPropagation();
+        // Логика для продления
+    };
+
+    const handleRequestClick = (event: React.MouseEvent, requestId: string) => {
+        event.stopPropagation();
+        navigate(`/passes/${requestId}`);
+    };
+
     return (
-        <div className="flex flex-col w-full p-5 sm:pt-4 sm:p-4 sm:pb-4 bg-white rounded-3xl border-[1px] border-gray-300">
+        <div className="flex flex-col w-full p-5 sm:pt-4 sm:p-4 sm:pb-4 bg-white rounded-3xl border-[1px] border-gray-300" onClick={() => navigate(`/passes/${id}`)}>
             <div className="flex justify-between">
                 <div className="flex gap-3">
                     <p className={`flex gap-1 ${textSize} font-semibold`}>
@@ -30,8 +43,8 @@ export const Absence = ({
                 <div
                     className={`flex flex-row font-semibold text-primary-tuftsBlue ${textSize} gap-4`}
                 >
-                    {userRole === 'student' && isAccepted === true && (
-                        <button>Продлить</button>
+                    {userRole === 'Студент' && isAccepted && (
+                        <button onClick={handleExtendClick}>Продлить</button>
                     )}
                     <p
                         className={`flex gap-1 ${isAccepted === null ? 'text-primary-orange' : isAccepted ? 'text-green-500' : 'text-red-500'}`}
@@ -39,8 +52,8 @@ export const Absence = ({
                         {isAccepted === null
                             ? 'На рассмотрении'
                             : isAccepted
-                              ? 'Принято'
-                              : 'Отклонено'}
+                                ? 'Принято'
+                                : 'Отклонено'}
                     </p>
                 </div>
             </div>
@@ -66,6 +79,7 @@ export const Absence = ({
                         <p
                             className="ms-10 mt-1 flex text-lg rounded-3xl px-3 font-semibold justify-between border-b-2 p-0.5 transition-colors duration-300 hover:bg-gray-300 hover:cursor-pointer"
                             key={index}
+                            onClick={(event) => handleRequestClick(event, request.id)}
                         >
                             {format(request.dateEnd, 'd MMMM yyyy', {
                                 locale: ru,
@@ -75,15 +89,15 @@ export const Absence = ({
                                     request.isAccepted === null
                                         ? 'text-primary-orange'
                                         : request.isAccepted
-                                          ? 'text-green-500'
-                                          : 'text-red-500'
+                                            ? 'text-green-500'
+                                            : 'text-red-500'
                                 }
                             >
                                 {request.isAccepted === null
                                     ? 'На рассмотрении'
                                     : request.isAccepted
-                                      ? 'Принято'
-                                      : 'Отклонено'}
+                                        ? 'Принято'
+                                        : 'Отклонено'}
                             </span>
                         </p>
                     ))}

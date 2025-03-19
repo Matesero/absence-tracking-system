@@ -7,6 +7,7 @@ import { loginPageUi } from '~/pages/login';
 import { mainPageUi } from '~/pages/main';
 import { profilePageUi } from '~/pages/profile';
 import { registrationPageUi } from '~/pages/registration';
+import { reportPageUi } from '~/pages/report';
 import { usersListPageUi } from '~/pages/users-list';
 import { sharedConfigRouter } from '~/shared/config';
 
@@ -14,6 +15,7 @@ const { LoginPage } = loginPageUi;
 const { MainPage } = mainPageUi;
 const { RegistrationPage } = registrationPageUi;
 const { ProfilePage } = profilePageUi;
+const { ReportPage } = reportPageUi;
 const { UsersListPage } = usersListPageUi;
 
 const { RouteName } = sharedConfigRouter;
@@ -43,6 +45,11 @@ export const AppRouter = () => {
                         <Route
                             path={RouteName.USERS_LIST_PAGE}
                             element={<UsersListPage />}
+                        />
+
+                        <Route
+                            path={RouteName.REPORT_PAGE}
+                            element={<ReportPage />}
                         />
                     </Route>
                 </Route>

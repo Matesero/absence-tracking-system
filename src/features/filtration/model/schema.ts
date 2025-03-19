@@ -77,6 +77,18 @@ export const schema = zod.object({
             return undefined;
         })
         .optional(),
-});
+})
+    .refine(
+    (data) => {
+        if (data.dateStart && data.dateEnd) {
+            return data.dateEnd >= data.dateStart;
+        }
+        return true;
+    },
+    {
+        message: 'Дата окончания должна быть не раньше даты начала',
+        path: ['dateEnd'],
+    },
+);;
 
 export type Schema = zod.infer<typeof schema>;
