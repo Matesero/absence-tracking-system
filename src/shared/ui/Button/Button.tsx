@@ -13,7 +13,7 @@ export const Button = ({ label, type, textColor, bgColor, onClick }: Props) => {
         <button
             type={type || 'button'}
             onClick={onClick}
-            className={`bg-${bgColor || 'primary-tuftsBlue'} !important  text-${textColor || 'white'} p-2.5 rounded-lg text-xl w-full`}
+            className={`${bgColor || 'bg-primary-tuftsBlue'} text-nowrap !important  text-${textColor || 'white'} p-2.5 rounded-lg text-xl w-full bg-green`}
         >
             {label}
         </button>
