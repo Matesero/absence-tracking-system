@@ -1,14 +1,17 @@
-import { useForm } from '../model'
+import React from 'react';
 
+import { useForm } from '~/features/pass/model';
 import { convertDateFrom } from '~/shared/lib/dateConverter';
+import { listToOptions } from '~/shared/lib/listToOptions';
+import { Button, CustomSelect as Select } from '~/shared/ui';
 
 type Props = {
     id: string;
 };
 
-export const TeacherView = ({ id }: Props) => {
+export const DeaneryView = ({ id }: Props) => {
     const textSize = 'text-xl';
-    const [data, downloadFile] = useForm(id);
+    const [data, downloadFile, onSubmit] = useForm(id);
 
     if (data === undefined) {
         return null;
@@ -60,18 +63,27 @@ export const TeacherView = ({ id }: Props) => {
                     </div>
                 </div>
             )}
-            <div className="flex gap-1">
-                <p className={textSize}>Статус:</p>
-                <p className={textSize}>
-                    {data.isAccepted === true ? (
-                        <>Принят</>
-                    ) : data.isAccepted === false ? (
-                        <>Отклонен</>
-                    ) : (
-                        <>На рассмотрении</>
-                    )}
-                </p>
-            </div>
+            <hr
+                className='bg-primary-gray'
+            />
+            <form
+                className='flex flex-col gap-4 w-1/4'
+                onSubmit={onSubmit}
+            >
+                <Select
+                    label="Статус:"
+                    name="status"
+                    value={data.isAccepted === true ? 'Принят' : data.isAccepted === false ? 'Отклонен' : 'На рассмотрении'}
+                    options={listToOptions([
+                        'Принят',
+                        'Отклонен',
+                    ])}
+                />
+                <Button
+                    label='Применить'
+                    type='submit'
+                />
+            </form>
         </>
     )
 }
