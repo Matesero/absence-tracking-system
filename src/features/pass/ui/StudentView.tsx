@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 
 import { useForm } from '~/features/pass/model';
 import { absenceSystemApi } from '~/shared/api';
-import { convertDateFrom } from '~/shared/lib/dateConverter';
 import { Button, InputField, CustomDatepicker as DatePicker, Loading } from '~/shared/ui';
 
 const pass = absenceSystemApi.pass;
@@ -68,7 +67,7 @@ const ExtendView = (data : ExtendProps) => {
     return (
         <div
             key={data.id}
-            className={`${textSize} flex flex-col gap-4 ml-4 self-start p-5 sm:pt-4 sm:p-4 sm:pb-4 bg-white rounded-3xl border-[1px] border-gray-300`}
+            className={`${textSize} flex flex-col gap-4 ml-4 min-w-96 self-start p-5 sm:pt-4 sm:p-4 sm:pb-4 bg-white rounded-3xl border-[1px] border-gray-300`}
         >
             <form
                 onSubmit={handleSubmit}
@@ -122,12 +121,12 @@ const ExtendView = (data : ExtendProps) => {
                         )}
                         <Button
                             label={isEditing ? 'Отмена' : 'Редактировать'}
-                            bgColor={isEditing ? 'primary-gray' : 'primary-orange'}
+                            bgColor={isEditing ? 'bg-primary-gray' : 'bg-primary-orange'}
                             onClick={handleCancel}
                         />
                         <Button
                             label='Удалить'
-                            bgColor='red-500'
+                            bgColor='bg-red-500'
                             onClick={onDelete}
                         />
                     </div>
@@ -250,12 +249,12 @@ export const StudentView = ({ id }: Props) => {
                         )}
                         <Button
                             label={isEditing ? 'Отмена' : 'Редактировать'}
-                            bgColor={isEditing ? 'primary-gray' : 'primary-orange'}
+                            bgColor={isEditing ? 'bg-primary-gray' : 'bg-primary-orange'}
                             onClick={handleCancel}
                         />
                         <Button
                             label='Удалить'
-                            bgColor='red-500'
+                            bgColor='bg-red-500'
                             onClick={onDelete}
                         />
                     </div>

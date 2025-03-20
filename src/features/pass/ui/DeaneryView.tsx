@@ -69,7 +69,7 @@ export const DeaneryView = ({ id }: Props) => {
                     {data.extendPassTimeRequests.map((extendPassTimeRequest) => (
                         <div
                             key={extendPassTimeRequest.id}
-                            className={`${textSize} flex flex-col gap-4 ml-4 self-start p-5 sm:pt-4 sm:p-4 sm:pb-4 bg-white rounded-3xl border-[1px] border-gray-300`}
+                            className={`${textSize} flex flex-col gap-4 ml-4 min-w-96 self-start p-5 sm:pt-4 sm:p-4 sm:pb-4 bg-white rounded-3xl border-[1px] border-gray-300`}
                         >
                             <div className='flex gap-1'>
                                 <p>По:</p>
