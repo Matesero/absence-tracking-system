@@ -1,50 +1,97 @@
-# React + TypeScript + Vite
+# Пропуски ТГУ
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Этот проект является лабораторной работой по предмету "Основы командной разработки" на факультете Высшая IT Школа
 
-Currently, two official plugins are available:
+Авторы: Гришенков Павел Федорович, Тарасов Вячеслав Андреевич
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Краткое описание
 
-## Expanding the ESLint configuration
+Пропуски ТГУ — это веб-приложение для учёта пропусков (пропущенных занятий/дней) студентами.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Проект поддерживает авторизацию, регистрацию пользователей, выдачу им специальных ролей, работу с профилем, 
+список пользователей, создание, редактирование, удаление, одобрение заявок/продлений заявок на пропуски, 
+а также генерацию отчетов по пропускам студентов.
 
-- Configure the top-level `parserOptions` property like this:
+## Основные функции и маршруты
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Авторизация
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- **URL:** `/login`
+- **Описание:**  
+  Пользователь вводит email и пароль для авторизации. Успешный вход возвращает токен авторизации.
+- **Примечания:**  
+  После успешного входа кнопка "Вход" в навбаре меняется на кнопку с ФИО пользователя. При нажатии на ФИО доступен выпадающий список с кнопками:
+    - "Профиль"
+    - "Выход"
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Регистрация
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- **URL:** `/registration`
+- **Описание:**  
+  Регистрация новых пользователей. Успешная регистрация возвращает токен авторизации.
+
+### Профиль
+
+- **URL:** `/profile`
+- **Описание:**  
+  Страница профиля позволяет редактировать личные данные:
+    - ФИО
+    - Email
+    - Группа
+
+### Список пользователей
+
+- **URL:** `/users`
+- **Описание:**  
+  Отображение списка всех пользователей системы. Доступно только деканату и админу
+- **Поддерживаемые функции:**
+    - **Фильтрация**
+    - **Блокировка пользователя**
+    - **Смена роли пользователя**
+- **Фильтры:**
+    - Поиск по имени пользователя
+    - Поиск по email пользователя
+    - Фильтрация по группам
+    - Фильтрация по роли
+
+### Список заявок
+
+- **URL:** `/`
+- **Описание:**  
+  Страница, где отображаются заявки в зависимости от роли пользователя
+- **Поддерживаемые функции:**
+    - **Фильтрация**
+    - **Создание заявки**
+    - **Создание заявки на продление пропуска**
+- **Фильтры:**
+    - Поиск по имени пользователя
+    - Поиск по email пользователя
+    - Фильтрация по группам
+    - Фильтрация по начальной и конечной датам
+    - Фильтрация по статусу заявки
+
+### Страница заявки
+
+- **URL:** `/passes/{id}`
+- **Описание:**  
+  Страница с подробностями заявки
+- **Поддерживаемые функции:**
+    - **Редактирование заявки**
+    - **Редактирование заявки на продление пропуска**
+    - **Удаление заявки**
+    - **Удаление заявки на продление пропуска**
+    - **Одобрение/отклонение заявки**
+    - **Одобрение/отклонение заявки на продление пропуска**
+
+### Генерация отчета
+
+- **URL:** `/report`
+- **Описание:**  
+  Форма для генерации отчетов по статистике пропусков
+- **Поля фильтрации:**
+    - Диапазон дат
+    - По группам
+- **Отчет отображается в виде таблицы:**
+    - Колонки — даты
+    - Строки — студенты
+    - В ячейках крестиком отмечены пропуски
