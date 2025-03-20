@@ -41,7 +41,7 @@ export const getList = async (params: GetAbsencesParams) => {
         delete requestParams.pageable;
 
         const response = await requester.get('/pass/request/pageable', {
-            params: requestParams,
+            params,
             paramsSerializer: (params) =>
                 qs.stringify(params, { arrayFormat: 'comma' }),
             headers: {

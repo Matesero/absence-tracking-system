@@ -1,1 +1,1 @@
-export * as absenceEntity from './Absence';
+export * as absenceEntity from './absence';

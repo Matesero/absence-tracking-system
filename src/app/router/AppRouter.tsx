@@ -5,20 +5,20 @@ import { Layout } from '~/app/layout';
 import { ProtectedRoute } from '~/app/router/ProtectedRoute';
 import { loginPageUi } from '~/pages/login';
 import { mainPageUi } from '~/pages/main';
+import { passPageUi } from '~/pages/pass';
 import { profilePageUi } from '~/pages/profile';
 import { registrationPageUi } from '~/pages/registration';
 import { reportPageUi } from '~/pages/report';
 import { usersListPageUi } from '~/pages/users-list';
-import { passPageUi } from '~/pages/pass';
 import { sharedConfigRouter } from '~/shared/config';
 
 const { LoginPage } = loginPageUi;
 const { MainPage } = mainPageUi;
+const { PassPage } = passPageUi;
 const { RegistrationPage } = registrationPageUi;
 const { ProfilePage } = profilePageUi;
 const { ReportPage } = reportPageUi;
 const { UsersListPage } = usersListPageUi;
-const { PassPage } = passPageUi;
 
 const { RouteName } = sharedConfigRouter;
 

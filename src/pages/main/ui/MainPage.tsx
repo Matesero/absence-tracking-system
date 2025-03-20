@@ -31,7 +31,7 @@ export const MainPage = () => {
             await appDispatch(getProfile());
         };
 
-        if (isAuth) {
+        if (isAuth && !user) {
             fetchProfile();
         }
     }, []);
