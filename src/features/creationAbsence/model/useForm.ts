@@ -1,6 +1,6 @@
 import { FormEventHandler, useState } from 'react';
 
-import { createNew } from './api';
+import { createExtension, createNew } from './api';
 import { schema, zod2errors } from './schema';
 
 type Props = 'new' | 'extension';
@@ -30,7 +30,7 @@ export const useForm = (formType: Props): FormResult => {
 
         if (dataParse.success) {
             const { data } = dataParse;
-            const { dateStart, dateEnd, message } = data;
+            const { dateStart, dateEnd, message, dateNewEnd, requestId } = data;
 
             switch (formType) {
                 case 'new':
@@ -53,8 +53,20 @@ export const useForm = (formType: Props): FormResult => {
                     break;
 
                 case 'extension':
-                    if (dateStart && dateEnd) {
+                    if (dateEnd && dateNewEnd && requestId) {
                         try {
+                            const response = await createExtension({
+                                requestId,
+                                dateEnd: dateNewEnd,
+                                message,
+                                files,
+                            })
+
+                            console.log(response)
+
+                            if (!response && response !== Promise) {
+                                setErrors({ response: 'ошибка' });
+                            }
                         } catch (error) {
                             setErrors({ response: error.toString() });
                         }

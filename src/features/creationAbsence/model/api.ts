@@ -45,19 +45,39 @@ export const createNew = async ({
 
 type CreateExtensionParams = {
     requestId: string;
-    dateStart: string;
-    dateEnd: string;
-    message: string;
-    files: FileList;
+    dateEnd: Date;
+    message: string | undefined;
+    files: FileList | undefined;
 };
 
-export const createExtension = async (params: CreateExtensionParams) => {
+export const createExtension = async ({
+                                          requestId,
+                                          dateEnd,
+                                          message,
+                                          files,
+                                      }: CreateExtensionParams) => {
+    const formData = new FormData();
+    const token = getToken();
+
+    formData.append('dateEnd', dateEnd.toISOString());
+    formData.append('message', message || '');
+
+    if (files) {
+        Array.from(files).forEach((file) => {
+            formData.append('files', file, file.name);
+        });
+    }
+
     try {
-        await requester.post(
-            `/pass/request/${params.requestId}/extend`,
-            params,
-        );
+        const response = await requester.post(`/pass/request/${requestId}/extend`, formData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        return response.data;
     } catch (error) {
-        console.log('Create extension', error);
+        console.log('Extension', error);
     }
 };

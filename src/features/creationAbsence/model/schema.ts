@@ -37,10 +37,21 @@ export const schema = zod
             .min(1, 'Поле является обязательным')
             .transform((str) => stringToDate(str)),
 
+        dateNewEnd: zod
+            .string()
+            .min(1, 'Поле является обязательным')
+            .transform((str) => stringToDate(str))
+            .optional(),
+
+        requestId: zod
+            .string()
+            .optional(),
+
         message: zod.string().trim().optional(),
     })
     .refine(
         (data) => {
+            console.log(data)
             if (data.dateStart && data.dateEnd) {
                 return data.dateEnd >= data.dateStart;
             }
@@ -49,7 +60,16 @@ export const schema = zod
         {
             message: 'Дата окончания должна быть не раньше даты начала',
             path: ['dateEnd'],
-        },
-    );
+        })
+    .refine(
+    (data) => {
+        if (data.dateEnd && data.dateNewEnd) {
+            return data.dateNewEnd >= data.dateEnd;
+        }
+        return true;
+    },{
+            message: 'Новая дата раньше прошлой',
+            path: ['dateNewEnd'],
+        });
 
 export type Schema = zod.infer<typeof schema>;

@@ -11,15 +11,17 @@ import {
 } from '~/shared/ui';
 
 type Props = {
+    handleFetchAbsences: () => void;
     onCancelClick: () => void;
 };
 
-export const CreationForm = ({ onCancelClick }: Props) => {
+export const CreationForm = ({ handleFetchAbsences, onCancelClick }: Props) => {
     const [errors, onSubmit, handleFileChange] = useForm('new');
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     useEffect(() => {
         if (isSubmitted && Object.keys(errors).length === 0 && onCancelClick) {
+            handleFetchAbsences();
             onCancelClick();
         }
 
