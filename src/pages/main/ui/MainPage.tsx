@@ -98,9 +98,7 @@ export const MainPage = () => {
                     {absences?.map((absence) => (
                         <Absence
                             {...absence}
-                            userRole={rolesMapper.mapRoleFrom(
-                                absence.user.role,
-                            )}
+                            userRole={user?.role}
                             onExtendClick={() => setPassExtended(absence)}
                             key={absence.id}
                         />

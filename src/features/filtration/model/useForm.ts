@@ -9,6 +9,7 @@ import { mapRoleTo } from '../model/rolesMapper';
 import { absenceSystemApi } from '~/shared/api';
 import { getUsers } from '~/shared/api/absenceSystem/user';
 import { userSlice } from '~/shared/store';
+import { toast } from 'react-toastify';
 
 type ErrorsType = { [key: string]: string };
 
@@ -152,16 +153,30 @@ export const useForm = (typeList: Props) => {
                                 type: response.headers['content-type'] || 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // Тип файла (Excel)
                             });
 
+                            const loadingToastId = toast.loading('Скачивание началось', {
+                                position: 'bottom-right',
+                                autoClose: false,
+                            });
+
                             const url = window.URL.createObjectURL(blob);
                             const link = document.createElement('a');
                             link.href = url;
-
                             link.setAttribute('download', fileName);
                             document.body.appendChild(link);
+
                             link.click();
 
-                            window.URL.revokeObjectURL(url);
-                            document.body.removeChild(link);
+                            setTimeout(() => {
+                                toast.update(loadingToastId, {
+                                    render: 'Загрузка завершена!',
+                                    type: 'success',
+                                    isLoading: false,
+                                    autoClose: 3000,
+                                });
+
+                                window.URL.revokeObjectURL(url);
+                                document.body.removeChild(link);
+                            }, 1000);
                         }
                     } else {
                         setErrors({

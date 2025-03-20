@@ -1,5 +1,6 @@
 import { absenceSystemApi } from '~/shared/api';
 import { getToken } from '~/shared/store/cookie';
+import { toast } from 'react-toastify';
 
 const { requester } = absenceSystemApi.base;
 
@@ -35,6 +36,10 @@ export const createNew = async ({
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'multipart/form-data',
             },
+        });
+
+        toast.success('Заявка на пропуск успешно создана', {
+            position: 'bottom-right',
         });
 
         return response.data;
@@ -74,6 +79,10 @@ export const createExtension = async ({
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'multipart/form-data',
             },
+        });
+
+        toast.success('Заявка на продление пропуска успешно создана', {
+            position: 'bottom-right',
         });
 
         return response.data;

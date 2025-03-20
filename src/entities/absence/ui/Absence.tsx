@@ -44,7 +44,7 @@ export const Absence = ({
                 <div
                     className={`flex flex-row font-semibold text-primary-tuftsBlue ${textSize} gap-4`}
                 >
-                    {userRole === 'Студент' && isAccepted && (
+                    {userRole === 'student' && isAccepted && (
                         <button onClick={handleExtendClick}>Продлить</button>
                     )}
                     <p
