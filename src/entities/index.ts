@@ -1,0 +1,1 @@
+export * as absenceEntity from './Absence';

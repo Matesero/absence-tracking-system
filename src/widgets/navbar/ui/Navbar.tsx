@@ -67,21 +67,26 @@ export const Navbar = () => {
                                 Пропуски ТГУ
                             </span>
                         </div>
-                        <a className="text-white hidden lg:block text-xl ms-2 font-semibold hover:cursor-pointer" onClick={handleHomeClick}>
-                            Пропуски
-                        </a>
-                        {user?.role !== 'student' &&
+                        {user && (
                             <>
-                                <a className="text-white hidden lg:block text-xl ms-2 font-semibold hover:cursor-pointer"
-                                   onClick={handleUsersClick}>
-                                    Пользователи
+                                <a className="text-white hidden lg:block text-xl ms-2 font-semibold hover:cursor-pointer" onClick={handleHomeClick}>
+                                    Пропуски
                                 </a>
-                                <a className="text-white hidden lg:block text-xl font-semibold hover:cursor-pointer"
-                                   onClick={handleReportClick}>
-                                    Отчёт
-                                </a>
+                                {user?.role !== 'student' &&
+                                    <>
+                                        <a className="text-white hidden lg:block text-xl ms-2 font-semibold hover:cursor-pointer"
+                                           onClick={handleUsersClick}>
+                                            Пользователи
+                                        </a>
+                                        <a className="text-white hidden lg:block text-xl font-semibold hover:cursor-pointer"
+                                           onClick={handleReportClick}>
+                                            Отчёт
+                                        </a>
+                                    </>
+                                }
+
                             </>
-                        }
+                        )}
                     </div>
                     <div className="flex gap-6">
                         <div className="hidden xs:flex items-center gap-10">
@@ -212,7 +217,7 @@ export const Navbar = () => {
                                             <img
                                                 src={BarsIcon}
                                                 className="h-6"
-                                                alt="TsuIcon"
+                                                alt="BarsIcon"
                                             />
                                         </button>
                                     </div>

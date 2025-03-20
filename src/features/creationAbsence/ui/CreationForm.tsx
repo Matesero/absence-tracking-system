@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import { FormWrapper } from './FormWrapper';
 import { useForm } from '../model';
 
@@ -14,9 +16,27 @@ type Props = {
 
 export const CreationForm = ({ onCancelClick }: Props) => {
     const [errors, onSubmit, handleFileChange] = useForm('new');
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    useEffect(() => {
+        if (isSubmitted && Object.keys(errors).length === 0 && onCancelClick) {
+            onCancelClick();
+        }
+
+        setIsSubmitted(false);
+    }, [errors, isSubmitted]);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        if (onSubmit) {
+            await onSubmit(event);
+            setIsSubmitted(true);
+        }
+    };
 
     return (
-        <FormWrapper title={'Создание'} onSubmit={onSubmit}>
+        <FormWrapper title={'Создание'} onSubmit={handleSubmit}>
             <>
                 <Datepicker
                     label="Начало"
