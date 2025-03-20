@@ -1,7 +1,8 @@
 import { DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import React, { useRef, useState } from 'react';
+import { Dayjs } from 'dayjs';
+import React from 'react';
 
 import 'dayjs/locale/ru';
 
@@ -10,9 +11,10 @@ type Props = {
     name: string;
     error?: string;
     disabled?: boolean;
+    value?: Dayjs;
 };
 
-export const CustomDatepicker = ({ label, name, error, disabled }: Props) => {
+export const CustomDatepicker = ({ label, name, error, disabled, value }: Props) => {
     const [open, setOpen] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -45,6 +47,7 @@ export const CustomDatepicker = ({ label, name, error, disabled }: Props) => {
                     <DatePicker
                         name={name}
                         disabled={disabled}
+                        value={value}
                         open={open}
                         onClose={() => setOpen(false)}
                         slotProps={{
