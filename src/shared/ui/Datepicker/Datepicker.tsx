@@ -19,7 +19,9 @@ export const CustomDatepicker = ({ label, name, error, disabled, value }: Props)
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleInputClick = () => {
-        setOpen(true);
+        if (!disabled) {
+            setOpen(true);
+        }
     };
 
     return (
