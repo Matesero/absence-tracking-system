@@ -10,7 +10,7 @@ const file = absenceSystemApi.file;
 const deanery = absenceSystemApi.deanery;
 
 export const useForm = (id: string, formType?: string) => {
-    const [data, setData] = useState()
+    const [data, setData] = useState();
 
     useEffect(() => {
         const getPassById = async () => {
@@ -69,5 +69,30 @@ export const useForm = (id: string, formType?: string) => {
         }
     }
 
-    return [data, downloadFile, onSubmit] as const;
+    const onExtendSubmit = (extendId: string): FormEventHandler<HTMLFormElement> =>
+        async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+        const dataParse = schema.safeParse(Object.fromEntries(formData));
+
+        if (dataParse.success) {
+            const { data } = dataParse;
+
+            switch (formType) {
+                case 'deanery':
+                    if (data.status) {
+                        const status = mapStatusTo(data.status);
+                        await deanery.acceptPassExtend(extendId, { isAccepted: status });
+                    }
+                    break;
+
+                case 'student':
+                    return await pass.updateExtendById(extendId, { dateEnd: data.dateEnd, message: data.message });
+            }
+        }
+    }
+
+
+    return [data, downloadFile, onSubmit, onExtendSubmit] as const;
 }
