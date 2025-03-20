@@ -49,22 +49,23 @@ export const useForm = (id: string, formType?: string) => {
         if (dataParse.success) {
             const { data } = dataParse;
 
-            switch (formType) {
-                case 'deanery':
-                    if (data.status) {
-                        const status = mapStatusTo(data.status);
-                        await deanery.acceptPass(id, { isAccepted: status });
-                    }
-                    break;
+            if (formType === 'deanery') {
+                if (data.status) {
+                    const status = mapStatusTo(data.status);
+                    await deanery.acceptPass(id, { isAccepted: status });
+                }
+            }
 
-                case 'student':
-                    setData(await pass.updateById(id, {
-                        dateStart: data.dateStart,
-                        dateEnd: data.dateEnd,
-                        message: data.message,
-                    }));
+            if (formType === 'student') {
+                const newData = await pass.updateById(id, {
+                    dateStart: data.dateStart,
+                    dateEnd: data.dateEnd,
+                    message: data.message,
+                })
 
-                    break;
+                if (newData) {
+                    setData(newData);
+                }
             }
         }
     }

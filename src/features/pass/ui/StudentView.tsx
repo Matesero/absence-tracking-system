@@ -47,7 +47,12 @@ const ExtendView = (data : ExtendProps) => {
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
-        setFormValues(await data.onExtendSubmit(data.id)(e));
+
+        const values = await data.onExtendSubmit(data.id)(e)
+        if (!values) {
+            return;
+        }
+        setFormValues(values);
         setIsEditing(false);
     };
 
