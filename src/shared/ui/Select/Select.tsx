@@ -14,6 +14,7 @@ type Props = {
     disabled?: boolean;
     value?: string;
     isMultiple?: boolean;
+    placeholder?: string;
 };
 
 export const CustomSelect = ({
@@ -24,6 +25,7 @@ export const CustomSelect = ({
     disabled,
     value,
     isMultiple,
+    placeholder
 }: Props) => {
     const [selectedValue, setValue] = useState<Option | null>(null);
 
@@ -74,7 +76,7 @@ export const CustomSelect = ({
                 options={options}
                 value={selectedValue}
                 isClearable
-                placeholder=""
+                placeholder={placeholder || 'Выбрать'}
                 isDisabled={disabled}
                 isMultiple={isMultiple}
                 classNames={{

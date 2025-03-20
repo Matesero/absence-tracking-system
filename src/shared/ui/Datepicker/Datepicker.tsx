@@ -1,7 +1,7 @@
 import { DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
 import 'dayjs/locale/ru';
 
@@ -13,6 +13,13 @@ type Props = {
 };
 
 export const CustomDatepicker = ({ label, name, error, disabled }: Props) => {
+    const [open, setOpen] = useState(false);
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const handleInputClick = () => {
+        setOpen(true);
+    };
+
     return (
         <div className="flex flex-col gap-1">
             <div className="flex flex-row items-center">
@@ -29,6 +36,7 @@ export const CustomDatepicker = ({ label, name, error, disabled }: Props) => {
 
             <div
                 className={`relative flex bg-white h-12 items-center border-s border-t border-e border-b ${error ? 'border-red-500' : 'border-primary-gray'} rounded-lg overflow-hidden transition-all duration-300 !focus:outline-none!overflow-y-hidden hover:border-gray-400 `}
+                onClick={handleInputClick}
             >
                 <LocalizationProvider
                     dateAdapter={AdapterDayjs}
@@ -37,8 +45,12 @@ export const CustomDatepicker = ({ label, name, error, disabled }: Props) => {
                     <DatePicker
                         name={name}
                         disabled={disabled}
+                        open={open}
+                        onClose={() => setOpen(false)}
                         slotProps={{
                             field: {
+                                inputRef,
+                                placeholder: 'ДД.ММ.ГГГГ',
                                 clearable: true,
                                 variant: 'outlined',
                                 style: {
@@ -56,6 +68,11 @@ export const CustomDatepicker = ({ label, name, error, disabled }: Props) => {
                                             border: 'none',
                                             outline: 'none',
                                         },
+                                    },
+                                    '& .MuiInputBase-input': {
+                                        fontSize: '1.25rem',
+                                        lineHeight: '1.75rem',
+                                        color: 'rgb(176,180,195)',
                                     },
                                 },
                             },
