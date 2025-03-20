@@ -36,15 +36,18 @@ export const useForm = (formType: Props): FormResult => {
                 case 'new':
                     if (dateStart && dateEnd) {
                         try {
-                            console.log(dateStart, dateEnd, message, files);
-                            await createNew({
+                            const response = await createNew({
                                 dateStart,
                                 dateEnd,
                                 message,
                                 files,
-                            });
+                            })
+
+                            if (!response && response !== Promise) {
+                                setErrors({ response: 'ошибка' });
+                            }
                         } catch (error) {
-                            setErrors({ response: error.toString() });
+                            setErrors({ response: error.message });
                         }
                     }
                     break;

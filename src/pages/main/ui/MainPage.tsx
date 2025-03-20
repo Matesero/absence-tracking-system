@@ -2,18 +2,20 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { absenceEntity } from '~/entities';
 import { filtrationFeature, creationFeature } from '~/features';
 import { useForm } from '~/features/filtration/model';
 import { getProfile } from '~/shared/api/absenceSystem/user';
 import { RouteName } from '~/shared/config/router';
 import { useAppDispatch } from '~/shared/store';
 import { userSlice } from '~/shared/store';
-import { Absence, Loading } from '~/shared/ui';
+import { Loading } from '~/shared/ui';
 
 const { selectors } = userSlice;
 const { AbsencesFilter } = filtrationFeature.ui;
 const { rolesMapper } = filtrationFeature.model;
 const { CreationForm } = creationFeature.ui;
+const { Absence } = absenceEntity.ui;
 
 export const MainPage = () => {
     const user = useSelector(selectors.user);

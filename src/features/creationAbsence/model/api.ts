@@ -6,8 +6,8 @@ const { requester } = absenceSystemApi.base;
 type CreateNewParams = {
     dateStart: Date;
     dateEnd: Date;
-    message: string;
-    files: FileList;
+    message: string | undefined;
+    files: FileList | undefined;
 };
 
 export const createNew = async ({
@@ -21,11 +21,13 @@ export const createNew = async ({
 
     formData.append('dateStart', dateStart.toISOString());
     formData.append('dateEnd', dateEnd.toISOString());
-    formData.append('message', message);
+    formData.append('message', message || '');
 
-    Array.from(files).forEach((file) => {
-        formData.append('files', file, file.name);
-    });
+    if (files){
+        Array.from(files).forEach((file) => {
+            formData.append('files', file, file.name);
+        });
+    }
 
     try {
         const response = await requester.post('/pass/request', formData, {
@@ -35,7 +37,7 @@ export const createNew = async ({
             },
         });
 
-        return response;
+        return response.data;
     } catch (error) {
         console.log('Create new', error);
     }
