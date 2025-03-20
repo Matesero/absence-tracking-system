@@ -139,73 +139,73 @@ export const Navbar = () => {
                                         )}
                                     </div>
                                 )}
-                            {isSidebarOpen && (
-                                <div
-                                    ref={sidebarRef}
-                                    className="fixed lg:hidden top-0 right-0 h-screen w-56 bg-white bg-opacity-35 backdrop-blur-xl shadow-lg z-50 flex flex-col"
-                                >
-                                    <button
-                                        onClick={() => setIsSidebarOpen(false)}
-                                        className="p-8 pb-2 self-end"
+                                {isSidebarOpen && user && (
+                                    <div
+                                        ref={sidebarRef}
+                                        className="fixed lg:hidden top-0 right-0 h-screen w-56 bg-white bg-opacity-35 backdrop-blur-xl shadow-lg z-50 flex flex-col"
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            height="40"
-                                            viewBox="0 96 960 960"
-                                            width="40"
-                                            fill="black"
+                                        <button
+                                            onClick={() => setIsSidebarOpen(false)}
+                                            className="p-8 pb-2 self-end"
                                         >
-                                            <path d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />
-                                        </svg>
-                                    </button>
-                                    <ul className="flex flex-col w-full mt-4">
-                                        <li>
-                                            <a
-                                                onClick={handleProfileClick}
-                                                className="block w-full px-6 py-3 text-black hover:bg-gray-200 cursor-pointer"
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                height="40"
+                                                viewBox="0 96 960 960"
+                                                width="40"
+                                                fill="black"
                                             >
-                                                Профиль
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                onClick={handleHomeClick}
-                                                className="block w-full px-6 py-3 text-black hover:bg-gray-200 cursor-pointer"
-                                            >
-                                                Пропуски
-                                            </a>
-                                        </li>
-                                        {user?.role !== 'student' &&
-                                            <>
-                                                <li>
-                                                    <a
-                                                        onClick={handleUsersClick}
-                                                        className="block w-full px-6 py-3 text-black hover:bg-gray-200 cursor-pointer"
-                                                    >
-                                                        Пользователи
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        onClick={handleReportClick}
-                                                        className="block w-full px-6 py-3 text-black hover:bg-gray-200 cursor-pointer"
-                                                    >
-                                                        Отчёт
-                                                    </a>
-                                                </li>
-                                            </>
-                                        }
-                                        <li>
-                                            <a
-                                                onClick={handleLogoutClick}
-                                                className="block w-full px-6 py-3 text-black hover:bg-gray-200 cursor-pointer"
-                                            >
-                                                Выход
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            )}
+                                                <path d="m249 849-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z" />
+                                            </svg>
+                                        </button>
+                                        <ul className="flex flex-col w-full mt-4">
+                                            <li>
+                                                <a
+                                                    onClick={handleProfileClick}
+                                                    className="block w-full px-6 py-3 text-black hover:bg-gray-200 cursor-pointer"
+                                                >
+                                                    Профиль
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a
+                                                    onClick={handleHomeClick}
+                                                    className="block w-full px-6 py-3 text-black hover:bg-gray-200 cursor-pointer"
+                                                >
+                                                    Пропуски
+                                                </a>
+                                            </li>
+                                            {user?.role !== 'student' &&
+                                                <>
+                                                    <li>
+                                                        <a
+                                                            onClick={handleUsersClick}
+                                                            className="block w-full px-6 py-3 text-black hover:bg-gray-200 cursor-pointer"
+                                                        >
+                                                            Пользователи
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a
+                                                            onClick={handleReportClick}
+                                                            className="block w-full px-6 py-3 text-black hover:bg-gray-200 cursor-pointer"
+                                                        >
+                                                            Отчёт
+                                                        </a>
+                                                    </li>
+                                                </>
+                                            }
+                                            <li>
+                                                <a
+                                                    onClick={handleLogoutClick}
+                                                    className="block w-full px-6 py-3 text-black hover:bg-gray-200 cursor-pointer"
+                                                >
+                                                    Выход
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                )}
 
                                 {user && (
                                     <div className="lg:hidden flex items-center">
