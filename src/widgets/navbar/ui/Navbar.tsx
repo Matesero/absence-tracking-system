@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { logout } from '~/shared/api/absenceSystem/user';
 import BarsIcon from '~/shared/assets/images/Bars.svg';
@@ -17,6 +17,7 @@ export const Navbar = () => {
     const dropdownRef = useRef<HTMLDivElement | null>(null);
     const sidebarRef = useRef<HTMLDivElement | null>(null);
     const navigate = useNavigate();
+    const location = useLocation();
     const addDispatch = useAppDispatch();
     const user = useSelector(selectors.user);
 
@@ -51,6 +52,11 @@ export const Navbar = () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     });
+
+    useEffect(() => {
+        setIsDropdownOpen(false);
+        setIsSidebarOpen(false);
+    }, [location.pathname]);
 
     return (
         <nav>

@@ -21,14 +21,14 @@ export const ProtectedRoute = ({ redirectPath = RouteName.MAIN_PAGE }: Props) =>
 
     useEffect(() => {
         const fetchProfile = async () => {
-            if (isAuth) {
+            if (isAuth && !user) {
                 try {
                     await appDispatch(getProfile());
                 } catch (error) {
                     console.log('Error fetch profile', error);
                     appDispatch(logout());
                 }
-            } else {
+            } else if (!isAuth) {
                 navigate(redirectPath);
             }
         };
