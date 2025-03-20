@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { filtrationFeature } from '~/features';
+import { filtrationFeature, userActionsFeature } from '~/features';
 import { useForm } from '~/features/filtration/model';
 
 const { UsersFilter } = filtrationFeature.ui;
-const { rolesMapper } = filtrationFeature.model;
+const { BlockButton, ChangeUserRole } = userActionsFeature.ui;
 
 interface User {
     id: string;
@@ -40,21 +40,8 @@ export const UsersListPage = () => {
                                 <p className={textSize}>email:</p>
                                 <p className={textSize}>{user.email}</p>
                             </div>
-                            {user.isBlocked && (
-                                <div className="flex">
-                                    <p className={`${textSize} text-red-600`}>
-                                        ЗАБЛОКИРОВАН
-                                    </p>
-                                </div>
-                            )}
                         </div>
                         <div className="flex gap-3">
-                            <div className="flex gap-1">
-                                <p className={textSize}>Роль:</p>
-                                <p className={textSize}>
-                                    {rolesMapper.mapRoleFrom(user.role)}
-                                </p>
-                            </div>
                             {user.group && (
                                 <div className="flex gap-1">
                                     <p className={textSize}>Группа:</p>
@@ -64,6 +51,19 @@ export const UsersListPage = () => {
                                 </div>
                             )}
                         </div>
+                        {user.role !== 'admin' && (
+                            <div className='flex flex-col gap-4 w-1/4'>
+                                <ChangeUserRole
+                                    userId={user.id}
+                                    userRole={user.role}
+                                />
+                                <hr/>
+                                <BlockButton
+                                    userId={user.id}
+                                    isBlocked={user.isBlocked}
+                                />
+                            </div>
+                        )}
                     </div>
                 ))}
         </div>
