@@ -1,4 +1,4 @@
-import React, { FormEventHandler } from 'react';
+import React, { FormEventHandler, forwardRef } from 'react';
 
 import { sharedConfigTypes } from '~/shared/config';
 import { listToOptions } from '~/shared/lib/listToOptions';
@@ -17,16 +17,16 @@ type Props = {
     onCreatingClick: () => void;
 };
 
-export const AbsencesFilter = ({
+export const AbsencesFilter = forwardRef<HTMLFormElement, Props>(({
     errors,
     groups,
     onSubmit,
     userRole,
     onCreatingClick,
-}: Props) => {
+}: Props, ref) => {
     return (
         <div className="rounded-3xl w-full border-[1px] border-gray-300 drop-shadow-lg">
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} ref={ref}>
                 <div className="bg-primary-gray p-2 pl-4 rounded-t-lg text-white font-semibold">
                     Фильтры
                 </div>
@@ -70,13 +70,6 @@ export const AbsencesFilter = ({
                                     'Отклоненные',
                                 ])}
                             />
-
-                            {/*<Select*/}
-                            {/*    label="Сортировка"*/}
-                            {/*    name="sort"*/}
-                            {/*    error={errors?.['sort'] ?? ''}*/}
-                            {/*    options={listToOptions(['Сначала', 'Сначала'])}*/}
-                            {/*/>*/}
                         </div>
 
                         <div className="flex w-fit items-end justify-self-end gap-4">
@@ -95,4 +88,4 @@ export const AbsencesFilter = ({
             </form>
         </div>
     );
-};
+});

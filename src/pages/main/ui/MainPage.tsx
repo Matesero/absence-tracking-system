@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,6 +6,7 @@ import { absenceEntity } from '~/entities';
 import { filtrationFeature, creationFeature } from '~/features';
 import { useForm } from '~/features/filtration/model';
 import { getProfile } from '~/shared/api/absenceSystem/user';
+import { sharedConfigTypes } from '~/shared/config';
 import { RouteName } from '~/shared/config/router';
 import { useAppDispatch } from '~/shared/store';
 import { userSlice } from '~/shared/store';
@@ -14,7 +15,7 @@ import { Loading } from '~/shared/ui';
 const { selectors } = userSlice;
 const { AbsencesFilter } = filtrationFeature.ui;
 const { rolesMapper } = filtrationFeature.model;
-const { CreationForm } = creationFeature.ui;
+const { CreationForm, ExtendingForm } = creationFeature.ui;
 const { Absence } = absenceEntity.ui;
 
 export const MainPage = () => {
@@ -24,6 +25,8 @@ export const MainPage = () => {
     const navigate = useNavigate();
     const appDispatch = useAppDispatch();
     const [isCreating, setIsCreating] = useState<boolean>(false);
+    const [passExtended, setPassExtended] = useState<sharedConfigTypes.Pass | undefined>(undefined)
+    const formRef = useRef<HTMLFormElement>(null);
     const [, absences, errors, groups, onSubmit] = useForm('absences');
 
     useEffect(() => {
@@ -43,6 +46,10 @@ export const MainPage = () => {
     if (isLoading) {
         return <Loading />;
     }
+
+    const handeFetchAbsences = () => {
+        formRef.current.requestSubmit();
+    };
 
     return (
         <div
@@ -67,11 +74,21 @@ export const MainPage = () => {
                 <>
                     {isCreating && user?.role === 'student' && (
                         <CreationForm
+                            handleFetchAbsences={handeFetchAbsences}
                             onCancelClick={() => setIsCreating(false)}
                         />
                     )}
 
+                    {passExtended && user?.role === 'student' && (
+                        <ExtendingForm
+                            handleFetchAbsences={handeFetchAbsences}
+                            onCancelClick={() => setPassExtended(undefined)}
+                            absence={passExtended}
+                        />
+                    )}
+
                     <AbsencesFilter
+                        ref={formRef}
                         errors={errors}
                         groups={groups}
                         onSubmit={onSubmit}
@@ -81,10 +98,8 @@ export const MainPage = () => {
                     {absences?.map((absence) => (
                         <Absence
                             {...absence}
-                            userRole={rolesMapper.mapRoleFrom(
-                                absence.user.role,
-                            )}
-                            onExtendClick={() => {}}
+                            userRole={user?.role}
+                            onExtendClick={() => setPassExtended(absence)}
                             key={absence.id}
                         />
                     ))}

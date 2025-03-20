@@ -14,7 +14,8 @@ export const Absence = ({
                             minioFiles,
                             extendPassTimeRequests,
                             isAccepted,
-                        }: sharedConfigTypes.Pass & { userRole: string }) => {
+                            onExtendClick,
+                        }: sharedConfigTypes.Pass & { userRole: string, onExtendClick: () => void }) => {
     const navigate = useNavigate();
     const textSize = 'text-xl';
 
@@ -23,7 +24,7 @@ export const Absence = ({
 
     const handleExtendClick = (event: React.MouseEvent) => {
         event.stopPropagation();
-        // Логика для продления
+        onExtendClick();
     };
 
     const handleRequestClick = (event: React.MouseEvent, requestId: string) => {
@@ -36,14 +37,14 @@ export const Absence = ({
             <div className="flex justify-between">
                 <div className="flex gap-3">
                     <p className={`flex gap-1 ${textSize} font-semibold`}>
-                        ФИО:
-                        <span>{user.fullName}</span>
+                        Заявка
+                        <span>#{id.split('-')[0]}</span>
                     </p>
                 </div>
                 <div
                     className={`flex flex-row font-semibold text-primary-tuftsBlue ${textSize} gap-4`}
                 >
-                    {userRole === 'Студент' && isAccepted && (
+                    {userRole === 'student' && isAccepted && (
                         <button onClick={handleExtendClick}>Продлить</button>
                     )}
                     <p
@@ -57,6 +58,12 @@ export const Absence = ({
                     </p>
                 </div>
             </div>
+            {userRole !== 'student' &&
+                <p className={`flex gap-1 ${textSize}`}>
+                    ФИО:
+                    <span>{user.fullName}</span>
+                </p>
+            }
             <p className={`flex gap-1 ${textSize}`}>
                 Период:
                 <span
@@ -79,9 +86,9 @@ export const Absence = ({
                         <p
                             className="ms-10 mt-1 flex text-lg rounded-3xl px-3 font-semibold justify-between border-b-2 p-0.5 transition-colors duration-300 hover:bg-gray-300 hover:cursor-pointer"
                             key={index}
-                            onClick={(event) => handleRequestClick(event, request.id)}
+                            onClick={(event) => handleRequestClick(event, id)}
                         >
-                            {format(request.dateEnd, 'd MMMM yyyy', {
+                            До {format(request.dateEnd, 'd MMMM yyyy', {
                                 locale: ru,
                             })}
                             <span

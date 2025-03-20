@@ -4,6 +4,7 @@ import { requester } from './base';
 
 import { sharedConfigTypes } from '~/shared/config';
 import { getToken } from '~/shared/store/cookie';
+import { toast } from 'react-toastify';
 
 export const getProfile = createAsyncThunk<sharedConfigTypes.User, void>(
     'user/getProfile',
@@ -56,6 +57,10 @@ export const patchProfile = createAsyncThunk<
             headers: {
                 Authorization: `Bearer ${token}`,
             },
+        });
+
+        toast.success('Изменения сохранены', {
+            position: 'bottom-right',
         });
 
         return response.data;

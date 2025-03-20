@@ -4,6 +4,7 @@ import { requester } from './base';
 
 import { sharedConfigTypes } from '~/shared/config';
 import { getToken } from '~/shared/store/cookie';
+import { toast } from 'react-toastify';
 
 type GetAbsencesParams = {
     userId?: string;
@@ -41,7 +42,7 @@ export const getList = async (params: GetAbsencesParams) => {
         delete requestParams.pageable;
 
         const response = await requester.get('/pass/request/pageable', {
-            params,
+            params: requestParams,
             paramsSerializer: (params) =>
                 qs.stringify(params, { arrayFormat: 'comma' }),
             headers: {
@@ -105,7 +106,7 @@ export const getReport = async (params: GetReportParams) => {
 
         return response;
     } catch (error) {
-        console.log('Get absences failed', error);
+        console.log('Get report failed', error);
     }
 };
 
@@ -137,6 +138,10 @@ export const updateById = async (passRequestId: string,
             },
         });
 
+        toast.success('Изменения сохранены', {
+            position: 'bottom-right',
+        });
+
         return response.data;
     } catch (error) {
         console.log('Update absence failed', error);
@@ -152,6 +157,10 @@ export const updateExtendById = async (passRequestId: string,
             headers: {
                 Authorization: `Bearer ${token}`,
             },
+        });
+
+        toast.success('Изменения сохранены', {
+            position: 'bottom-right',
         });
 
         return response.data;
@@ -170,6 +179,10 @@ export const deleteById = async (passRequestId: string) => {
             },
         });
 
+        toast.success('Заявка на пропуск удалена', {
+            position: 'bottom-right',
+        });
+
         return response.data;
     } catch (error) {
         console.log('Delete absence by id failed', error);
@@ -184,6 +197,10 @@ export const deleteExtendById = async (requestId: string) => {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
+        });
+
+        toast.success('Заявка на продление пропуска удалена', {
+            position: 'bottom-right',
         });
 
         return response.data;

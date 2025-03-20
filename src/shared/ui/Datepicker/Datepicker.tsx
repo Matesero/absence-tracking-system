@@ -19,7 +19,9 @@ export const CustomDatepicker = ({ label, name, error, disabled, value }: Props)
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleInputClick = () => {
-        setOpen(true);
+        if (!disabled) {
+            setOpen(true);
+        }
     };
 
     return (
@@ -75,7 +77,6 @@ export const CustomDatepicker = ({ label, name, error, disabled, value }: Props)
                                     '& .MuiInputBase-input': {
                                         fontSize: '1.25rem',
                                         lineHeight: '1.75rem',
-                                        color: 'rgb(176,180,195)',
                                     },
                                 },
                             },
